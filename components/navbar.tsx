@@ -9,7 +9,6 @@ import { Menu, X } from "lucide-react"
 const navLinks = [
   { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
-  { name: "ML Tools", href: "#ml-tools" },
   { name: "Projects", href: "#projects" },
   { name: "Ministries", href: "#ministries" },
   { name: "Contact", href: "#contact" },
@@ -35,10 +34,10 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-background/80 backdrop-blur-md shadow-sm" : "bg-transparent"
+        scrolled ? "navbar-glass py-2" : "bg-transparent py-4"
       }`}
     >
-      <div className="container mx-auto px-4 py-3">
+      <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold font-poppins gradient-text">
             Supriya

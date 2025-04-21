@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent } from "@/components/ui/card"
 import { Mail, Phone, MapPin, Linkedin, Github, Instagram } from "lucide-react"
-import { submitContactForm } from "@/actions/contact"
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -17,60 +16,48 @@ export default function Contact() {
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [formStatus, setFormStatus] = useState<{
-    success?: boolean
-    message?: string
-  }>({})
+  const [submitted, setSubmitted] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    setFormStatus({})
 
-    try {
-      const formDataObj = new FormData()
-      formDataObj.append("name", formData.name)
-      formDataObj.append("email", formData.email)
-      formDataObj.append("message", formData.message)
-
-      const result = await submitContactForm(formDataObj)
-
-      setFormStatus(result)
-
-      if (result.success) {
-        setFormData({ name: "", email: "", message: "" })
-        // Reset success message after 5 seconds
-        setTimeout(() => setFormStatus({}), 5000)
-      }
-    } catch (error) {
-      setFormStatus({
-        success: false,
-        message: "An unexpected error occurred. Please try again.",
-      })
-    } finally {
+    // Simulate form submission
+    setTimeout(() => {
       setIsSubmitting(false)
-    }
+      setSubmitted(true)
+      setFormData({ name: "", email: "", message: "" })
+
+      // Reset success message after 5 seconds
+      setTimeout(() => setSubmitted(false), 5000)
+    }, 1500)
   }
 
   return (
-    <section
-      id="contact"
-      className="section-padding bg-gradient-to-b from-background to-muted/30 relative overflow-hidden"
-    >
+    <section id="contact" className="section-contact section-padding relative overflow-hidden">
       {/* Decorative elements */}
-      <div className="absolute top-20 right-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl animate-pulse-slow"></div>
+      <div className="circle-decoration circle-1 animate-rotate" style={{ animationDuration: "32s" }}></div>
       <div
-        className="absolute bottom-40 left-10 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-pulse-slow"
+        className="circle-decoration circle-2 animate-rotate"
+        style={{ animationDuration: "38s", animationDirection: "reverse" }}
+      ></div>
+
+      <div className="absolute top-20 right-20 w-64 h-64 bg-rose-500/5 rounded-full blur-3xl animate-pulse-slow"></div>
+      <div
+        className="absolute bottom-40 left-10 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl animate-pulse-slow"
         style={{ animationDelay: "2s" }}
       ></div>
 
       <div className="container px-4 mx-auto relative z-10">
-        <h2 className="section-title gradient-text">Get In Touch</h2>
+        <div className="inline-block p-2 px-4 bg-rose-500/10 backdrop-blur-sm rounded-full text-sm font-medium mb-4 mx-auto text-center">
+          📬 Get in Touch
+        </div>
+        <h2 className="section-title gradient-text">Let's Connect</h2>
         <p className="section-subtitle">Have a question or want to connect? Feel free to reach out!</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -82,22 +69,22 @@ export default function Contact() {
             </p>
 
             <div className="space-y-4">
-              <div className="flex items-center gap-4 hover-scale">
-                <div className="p-3 bg-primary/10 rounded-full animate-pulse-slow">
-                  <Mail className="h-5 w-5 text-primary" />
+              <div className="flex items-center gap-4 hover-scale p-4 bg-white/10 dark:bg-white/5 backdrop-blur-sm rounded-xl">
+                <div className="p-3 bg-rose-500/10 rounded-full animate-pulse-slow">
+                  <Mail className="h-5 w-5 text-rose-500" />
                 </div>
                 <div>
                   <h4 className="font-medium">Email</h4>
                   <div className="space-y-1">
                     <a
                       href="mailto:supepoudel2005@gmail.com"
-                      className="text-muted-foreground hover:text-primary block"
+                      className="text-muted-foreground hover:text-rose-500 block"
                     >
                       supepoudel2005@gmail.com
                     </a>
                     <a
                       href="mailto:mail@supriyapoudel.com.np"
-                      className="text-muted-foreground hover:text-primary block"
+                      className="text-muted-foreground hover:text-rose-500 block"
                     >
                       mail@supriyapoudel.com.np
                     </a>
@@ -105,21 +92,21 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 hover-scale">
-                <div className="p-3 bg-primary/10 rounded-full animate-pulse-slow" style={{ animationDelay: "0.5s" }}>
-                  <Phone className="h-5 w-5 text-primary" />
+              <div className="flex items-center gap-4 hover-scale p-4 bg-white/10 dark:bg-white/5 backdrop-blur-sm rounded-xl">
+                <div className="p-3 bg-rose-500/10 rounded-full animate-pulse-slow" style={{ animationDelay: "0.5s" }}>
+                  <Phone className="h-5 w-5 text-rose-500" />
                 </div>
                 <div>
                   <h4 className="font-medium">Phone</h4>
-                  <a href="tel:+9779869835025" className="text-muted-foreground hover:text-primary">
+                  <a href="tel:+9779869835025" className="text-muted-foreground hover:text-rose-500">
                     +977-9869835025
                   </a>
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 hover-scale">
-                <div className="p-3 bg-primary/10 rounded-full animate-pulse-slow" style={{ animationDelay: "1s" }}>
-                  <MapPin className="h-5 w-5 text-primary" />
+              <div className="flex items-center gap-4 hover-scale p-4 bg-white/10 dark:bg-white/5 backdrop-blur-sm rounded-xl">
+                <div className="p-3 bg-rose-500/10 rounded-full animate-pulse-slow" style={{ animationDelay: "1s" }}>
+                  <MapPin className="h-5 w-5 text-rose-500" />
                 </div>
                 <div>
                   <h4 className="font-medium">Location</h4>
@@ -135,41 +122,41 @@ export default function Contact() {
                   href="https://www.linkedin.com/in/supriya-poudel-38ba13347/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 bg-primary/10 rounded-full hover:bg-primary/20 transition-colors animate-float"
+                  className="p-3 bg-rose-500/10 rounded-full hover:bg-rose-500/20 transition-colors animate-float"
                   style={{ animationDelay: "0s" }}
                 >
-                  <Linkedin className="h-5 w-5 text-primary" />
+                  <Linkedin className="h-5 w-5 text-rose-500" />
                 </a>
                 <a
                   href="https://github.com/supdel66"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 bg-primary/10 rounded-full hover:bg-primary/20 transition-colors animate-float"
+                  className="p-3 bg-rose-500/10 rounded-full hover:bg-rose-500/20 transition-colors animate-float"
                   style={{ animationDelay: "0.2s" }}
                 >
-                  <Github className="h-5 w-5 text-primary" />
+                  <Github className="h-5 w-5 text-rose-500" />
                 </a>
                 <a
                   href="https://www.instagram.com/supriya.6.poudel/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 bg-primary/10 rounded-full hover:bg-primary/20 transition-colors animate-float"
+                  className="p-3 bg-rose-500/10 rounded-full hover:bg-rose-500/20 transition-colors animate-float"
                   style={{ animationDelay: "0.4s" }}
                 >
-                  <Instagram className="h-5 w-5 text-primary" />
+                  <Instagram className="h-5 w-5 text-rose-500" />
                 </a>
               </div>
             </div>
           </div>
 
           <div className="animate-slide-up">
-            <Card className="overflow-hidden warm-glow">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-60 z-0"></div>
+            <Card className="overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-rose-500/5 to-amber-500/5 z-0"></div>
               <CardContent className="p-6 relative z-10">
                 <h3 className="text-xl font-bold mb-4 font-poppins">Send Me a Message</h3>
-                {formStatus.success ? (
+                {submitted ? (
                   <div className="bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300 p-4 rounded-md">
-                    {formStatus.message || "Thank you for your message! I'll get back to you soon."}
+                    Thank you for your message! I'll get back to you soon.
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-4">
@@ -184,7 +171,7 @@ export default function Contact() {
                         onChange={handleChange}
                         placeholder="Your name"
                         required
-                        className="bg-background/50 backdrop-blur-sm"
+                        className="bg-white/20 dark:bg-white/5 backdrop-blur-sm border-rose-500/20"
                       />
                     </div>
                     <div>
@@ -199,7 +186,7 @@ export default function Contact() {
                         onChange={handleChange}
                         placeholder="Your email"
                         required
-                        className="bg-background/50 backdrop-blur-sm"
+                        className="bg-white/20 dark:bg-white/5 backdrop-blur-sm border-rose-500/20"
                       />
                     </div>
                     <div>
@@ -214,13 +201,10 @@ export default function Contact() {
                         placeholder="Your message"
                         rows={5}
                         required
-                        className="bg-background/50 backdrop-blur-sm"
+                        className="bg-white/20 dark:bg-white/5 backdrop-blur-sm border-rose-500/20"
                       />
                     </div>
-                    {formStatus.message && !formStatus.success && (
-                      <div className="text-red-500 text-sm">{formStatus.message}</div>
-                    )}
-                    <Button type="submit" className="w-full animate-glow hover-scale" disabled={isSubmitting}>
+                    <Button type="submit" className="w-full button-glow" disabled={isSubmitting}>
                       {isSubmitting ? "Sending..." : "Send Message"}
                     </Button>
                   </form>

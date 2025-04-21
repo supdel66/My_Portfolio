@@ -6,7 +6,7 @@ import Contact from "@/components/contact"
 
 export default function Home() {
   return (
-    <div>
+    <div className="overflow-hidden">
       <Hero />
       <About />
       <Projects />

@@ -57,36 +57,51 @@ const hackathons = [
 
 export default function Ministries() {
   return (
-    <section id="ministries" className="section-padding bg-gradient-to-b from-background to-muted/30">
-      <div className="container px-4 mx-auto">
-        <h2 className="section-title">Ministries & Organizations</h2>
+    <section id="ministries" className="section-ministries section-padding relative overflow-hidden">
+      {/* Decorative elements */}
+      <div className="circle-decoration circle-1 animate-rotate" style={{ animationDuration: "28s" }}></div>
+      <div
+        className="circle-decoration circle-2 animate-rotate"
+        style={{ animationDuration: "32s", animationDirection: "reverse" }}
+      ></div>
+
+      <div className="absolute top-40 left-40 w-72 h-72 bg-purple-500/5 rounded-full blur-3xl animate-pulse-slow"></div>
+      <div
+        className="absolute bottom-20 right-20 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse-slow"
+        style={{ animationDelay: "1.8s" }}
+      ></div>
+
+      <div className="container px-4 mx-auto relative z-10">
+        <div className="inline-block p-2 px-4 bg-purple-500/10 backdrop-blur-sm rounded-full text-sm font-medium mb-4 mx-auto text-center">
+          🤝 Community Involvement
+        </div>
+        <h2 className="section-title gradient-text-blue">Ministries & Organizations</h2>
         <p className="section-subtitle">Organizations and initiatives I've been involved with</p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {ministries.map((ministry, index) => (
             <Card
               key={index}
-              className="card-hover animate-slide-up"
-              style={{
-                animationDelay: `${index * 0.1}s`,
-                background: "rgba(255, 255, 255, 0.05)",
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(255, 255, 255, 0.1)",
-              }}
+              className="card-hover animate-slide-up overflow-hidden"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <CardHeader className="pb-2">
-                <div className="mb-4">{ministry.icon}</div>
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5 z-0"></div>
+              <CardHeader className="pb-2 relative z-10">
+                <div className="mb-4 p-3 bg-purple-500/10 rounded-full">{ministry.icon}</div>
                 <CardTitle>{ministry.title}</CardTitle>
                 <span className="text-sm text-muted-foreground">{ministry.period}</span>
               </CardHeader>
-              <CardContent>
+              <CardContent className="relative z-10">
                 <CardDescription>{ministry.description}</CardDescription>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        <h2 className="section-title mt-16">Hackathons & Events</h2>
+        <div className="inline-block p-2 px-4 bg-blue-500/10 backdrop-blur-sm rounded-full text-sm font-medium mb-4 mx-auto text-center mt-16">
+          🏆 Competitions & Events
+        </div>
+        <h2 className="section-title gradient-text-blue">Hackathons & Events</h2>
         <p className="section-subtitle">Competitions and tech events I've participated in</p>
 
         <div className="grid grid-cols-1 gap-6">
@@ -94,22 +109,17 @@ export default function Ministries() {
             <Card
               key={index}
               className="card-hover animate-slide-up overflow-hidden"
-              style={{
-                animationDelay: `${index * 0.1}s`,
-                background: "rgba(255, 255, 255, 0.05)",
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(255, 255, 255, 0.1)",
-              }}
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-60 z-0"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 z-0"></div>
               <CardHeader className="relative z-10">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-primary/10 rounded-full">{hackathon.icon}</div>
+                  <div className="p-3 bg-blue-500/10 rounded-full">{hackathon.icon}</div>
                   <div>
                     <CardTitle className="flex items-center gap-2">
                       {hackathon.title}
                       {hackathon.achievement && (
-                        <span className="text-xs font-normal px-2 py-1 bg-primary/20 text-primary rounded-full">
+                        <span className="text-xs font-normal px-2 py-1 bg-blue-500/20 text-blue-600 dark:text-blue-400 rounded-full">
                           {hackathon.achievement}
                         </span>
                       )}
@@ -124,7 +134,7 @@ export default function Ministries() {
               {hackathon.links.length > 0 && (
                 <CardFooter className="flex gap-2 relative z-10">
                   {hackathon.links.map((link, linkIndex) => (
-                    <Button key={linkIndex} size="sm" variant="outline" asChild>
+                    <Button key={linkIndex} size="sm" variant="outline" asChild className="button-glow">
                       <a href={link.url} target="_blank" rel="noopener noreferrer">
                         {link.label}
                       </a>
@@ -136,6 +146,8 @@ export default function Ministries() {
           ))}
         </div>
       </div>
+
+      <div className="section-divider mt-16"></div>
     </section>
   )
 }
