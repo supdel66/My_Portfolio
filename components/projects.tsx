@@ -18,7 +18,7 @@ const projects = [
       "Web application that helps users find recipes based on available ingredients and dietary preferences.",
     tags: ["JavaScript", "API", "CSS", "HTML"],
     github: "https://github.com/supdel66/Recipe-Finder",
-    demo: "#",
+    demo: "https://supdel66.github.io/Recipe-Finder/",
     icon: <Utensils className="h-10 w-10 text-primary/60" />,
   },
   {
@@ -26,9 +26,18 @@ const projects = [
     description: "Collection of small JavaScript projects showcasing various web development concepts and techniques.",
     tags: ["JavaScript", "HTML", "CSS", "DOM Manipulation"],
     github: "https://github.com/supdel66/js_projects",
-    demo: "#",
+    demo: "https://supdel66.github.io/js_projects/",
     icon: <Code className="h-10 w-10 text-primary/60" />,
   },
+  {
+    title: "Illumination Graphics Project",
+      description: "A 3D animated scene demonstrating ambient, diffuse, and specular lighting models with reflections.",
+        tags: ["WebGL", "3D Animation", "Lighting Models", "Graphics"],
+          github: "https://github.com/supdel66/illumination-graphics",
+            demo: "https://graphics.supriyapoudel.com.np",
+              icon: <Code className="h-10 w-10 text-primary/60" />,
+              },
+
 ]
 
 export default function Projects() {
