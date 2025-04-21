@@ -59,23 +59,15 @@ export default function Ministries() {
   return (
     <section id="ministries" className="section-ministries section-padding relative overflow-hidden">
       {/* Decorative elements */}
-      <div className="circle-decoration circle-1 animate-rotate" style={{ animationDuration: "28s" }}></div>
+      <div className="absolute top-40 left-40 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-pulse-slow"></div>
       <div
-        className="circle-decoration circle-2 animate-rotate"
-        style={{ animationDuration: "32s", animationDirection: "reverse" }}
-      ></div>
-
-      <div className="absolute top-40 left-40 w-72 h-72 bg-purple-500/5 rounded-full blur-3xl animate-pulse-slow"></div>
-      <div
-        className="absolute bottom-20 right-20 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse-slow"
+        className="absolute bottom-20 right-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-pulse-slow"
         style={{ animationDelay: "1.8s" }}
       ></div>
 
       <div className="container px-4 mx-auto relative z-10">
-        <div className="inline-block p-2 px-4 bg-purple-500/10 backdrop-blur-sm rounded-full text-sm font-medium mb-4 mx-auto text-center">
-          🤝 Community Involvement
-        </div>
-        <h2 className="section-title gradient-text-blue">Ministries & Organizations</h2>
+        <div className="section-indicator mx-auto text-center">🤝 Community Involvement</div>
+        <h2 className="section-title">Ministries & Organizations</h2>
         <p className="section-subtitle">Organizations and initiatives I've been involved with</p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -85,23 +77,20 @@ export default function Ministries() {
               className="card-hover animate-slide-up overflow-hidden"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5 z-0"></div>
-              <CardHeader className="pb-2 relative z-10">
-                <div className="mb-4 p-3 bg-purple-500/10 rounded-full">{ministry.icon}</div>
+              <CardHeader className="pb-2">
+                <div className="mb-4 p-3 bg-primary/10 rounded-full">{ministry.icon}</div>
                 <CardTitle>{ministry.title}</CardTitle>
                 <span className="text-sm text-muted-foreground">{ministry.period}</span>
               </CardHeader>
-              <CardContent className="relative z-10">
+              <CardContent>
                 <CardDescription>{ministry.description}</CardDescription>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        <div className="inline-block p-2 px-4 bg-blue-500/10 backdrop-blur-sm rounded-full text-sm font-medium mb-4 mx-auto text-center mt-16">
-          🏆 Competitions & Events
-        </div>
-        <h2 className="section-title gradient-text-blue">Hackathons & Events</h2>
+        <div className="section-indicator mx-auto text-center mt-16">🏆 Competitions & Events</div>
+        <h2 className="section-title">Hackathons & Events</h2>
         <p className="section-subtitle">Competitions and tech events I've participated in</p>
 
         <div className="grid grid-cols-1 gap-6">
@@ -111,28 +100,23 @@ export default function Ministries() {
               className="card-hover animate-slide-up overflow-hidden"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 z-0"></div>
-              <CardHeader className="relative z-10">
+              <CardHeader className="relative">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-blue-500/10 rounded-full">{hackathon.icon}</div>
+                  <div className="p-3 bg-primary/10 rounded-full">{hackathon.icon}</div>
                   <div>
                     <CardTitle className="flex items-center gap-2">
                       {hackathon.title}
-                      {hackathon.achievement && (
-                        <span className="text-xs font-normal px-2 py-1 bg-blue-500/20 text-blue-600 dark:text-blue-400 rounded-full">
-                          {hackathon.achievement}
-                        </span>
-                      )}
+                      {hackathon.achievement && <span className="achievement-badge">{hackathon.achievement}</span>}
                     </CardTitle>
                     <span className="text-sm text-muted-foreground">{hackathon.period}</span>
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="relative z-10">
+              <CardContent>
                 <p className="text-sm text-muted-foreground">{hackathon.description}</p>
               </CardContent>
               {hackathon.links.length > 0 && (
-                <CardFooter className="flex gap-2 relative z-10">
+                <CardFooter className="flex gap-2">
                   {hackathon.links.map((link, linkIndex) => (
                     <Button key={linkIndex} size="sm" variant="outline" asChild className="button-glow">
                       <a href={link.url} target="_blank" rel="noopener noreferrer">
@@ -146,8 +130,6 @@ export default function Ministries() {
           ))}
         </div>
       </div>
-
-      <div className="section-divider mt-16"></div>
     </section>
   )
 }
