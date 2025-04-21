@@ -1,30 +1,63 @@
-# New Project
+# Supriya's Portfolio
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
+Welcome to my personal portfolio website! This site showcases my journey as a beginner in the world of Machine Learning, Data Science, and Web Development. It includes details about my background, skillsets, projects, hackathon experiences, and initiatives I’ve been part of.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/supdel66s-projects/v0-new-project-fuebiugd8te)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/FuebiUgd8TE)
+## 🔗 Live Demo
 
-## Overview
+[Click here to view the live portfolio](www.supriyapoudel.com.np)  
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+---
 
-## Deployment
+## 📌 Sections
 
-Your project is live at:
+### 🏠 Home  
+A welcoming section introducing who I am and what this website is about.
 
-**[https://vercel.com/supdel66s-projects/v0-new-project-fuebiugd8te](https://vercel.com/supdel66s-projects/v0-new-project-fuebiugd8te)**
+### 🙋‍♀️ About Me  
+Details about my background, my journey in tech, and my transition into Machine Learning and Data Science.
 
-## Build your app
+### 🛠 Skills
+- **Machine Learning:** Python, scikit-learn, basic ML models
+- **Web Development:** HTML, CSS, JavaScript
+- **Data Science:** Data analysis & visualization (beginner)
 
-Continue building your app on:
+### 📁 Projects
+A list of my favorite and ongoing projects:
+- **Customer Churn Prediction:** ML model predicting customer churn.
+- **Recipe Finder:** A web app using ingredients and preferences to suggest recipes.
+- **Mini JS Projects:** A collection of small JavaScript apps demonstrating core web dev concepts.
 
-**[https://v0.dev/chat/projects/FuebiUgd8TE](https://v0.dev/chat/projects/FuebiUgd8TE)**
+### 🏢 Ministries & Organizations
+Showcasing organizations and volunteer efforts I’ve been part of:
+- Tech Community Volunteer
+- Youth Mentorship Program
+- Digital Literacy Initiative
 
-## How It Works
+### ⚔️ Hackathons & Events
+Competitions and events I’ve participated in:
+- **Bhaktpur Navigator Hackathon** (2nd Runner Up)
+- **WebCraft Business Website Builder** (Participant)
+- **Hult Prize Competition** (Finalist)
 
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+### 📬 Contact
+Provides ways to get in touch:
+- Email: supepoudel2005@gmail.com / mail@supriyapoudel.com.np  
+- Phone: +977-9869835025  
+- Location: Kathmandu, Nepal
+
+---
+
+## 📦 Tech Stack
+
+- **Frontend:** HTML, CSS, JavaScript  
+- **ML Projects:** Python, scikit-learn  
+- **Tools:** VS Code, GitHub, APIs
+
+---
+
+## 🚀 How to Run Locally
+
+```bash
+git clone https://github.com/yourusername/supriya-portfolio.git
+cd supriya-portfolio
+open index.html  # Or open with Live Server in VS Code
