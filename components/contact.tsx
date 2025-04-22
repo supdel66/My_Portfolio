@@ -39,7 +39,6 @@ export default function Contact() {
       formDataObj.append("message", formData.message)
 
       const result = await submitContactForm(formDataObj)
-
       setFormStatus(result)
 
       if (result.success) {
@@ -48,15 +47,24 @@ export default function Contact() {
         setTimeout(() => setFormStatus({}), 5000)
       }
     } catch (error) {
-      console.error("Contact form error:", error)
       setFormStatus({
         success: false,
-        message: "An unexpected error occurred. Please try again or email me directly at mail@supriyapoudel.com.np",
+        message: "An error occurred. Please email me directly at mail@supriyapoudel.com.np",
       })
     } finally {
       setIsSubmitting(false)
     }
   }
+
+  // Alternative contact method message
+  const directContactMessage = (
+    <p className="text-sm text-muted-foreground mt-2">
+      You can also email me directly at{" "}
+      <a href="mailto:mail@supriyapoudel.com.np" className="text-primary hover:underline">
+        mail@supriyapoudel.com.np
+      </a>
+    </p>
+  )
 
   return (
     <section id="contact" className="section-contact section-padding relative overflow-hidden">
@@ -224,6 +232,7 @@ export default function Contact() {
                     <Button type="submit" className="w-full button-glow" disabled={isSubmitting}>
                       {isSubmitting ? "Sending..." : "Send Message"}
                     </Button>
+                    {directContactMessage}
                   </form>
                 )}
               </CardContent>
