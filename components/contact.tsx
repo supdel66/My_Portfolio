@@ -47,6 +47,7 @@ export default function Contact() {
         setTimeout(() => setFormStatus({}), 5000)
       }
     } catch (error) {
+      console.log(error)
       setFormStatus({
         success: false,
         message: "An error occurred. Please email me directly at mail@supriyapoudel.com.np",
