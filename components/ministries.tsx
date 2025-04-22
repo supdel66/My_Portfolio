@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
-import { Award, Users, BookOpen, Code, MapPin, Rocket } from "lucide-react"
+import { Award, Users, BookOpen, Code, MapPin, Rocket, ExternalLink, Github } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const ministries = [
@@ -117,13 +117,33 @@ export default function Ministries() {
               </CardContent>
               {hackathon.links.length > 0 && (
                 <CardFooter className="flex gap-2">
-                  {hackathon.links.map((link, linkIndex) => (
-                    <Button key={linkIndex} size="sm" variant="outline" asChild className="button-glow">
-                      <a href={link.url} target="_blank" rel="noopener noreferrer">
-                        {link.label}
-                      </a>
-                    </Button>
-                  ))}
+                  {hackathon.links.map((link, linkIndex) => {
+                    // Determine if this is a "Live Demo" or "Code" link
+                    const isLiveDemo = link.label.includes("Demo")
+                    return (
+                      <Button
+                        key={linkIndex}
+                        size="sm"
+                        variant={isLiveDemo ? "default" : "outline"}
+                        asChild
+                        className="button-glow"
+                      >
+                        <a href={link.url} target="_blank" rel="noopener noreferrer">
+                          {isLiveDemo ? (
+                            <>
+                              <ExternalLink className="mr-2 h-4 w-4" />
+                              Live Demo
+                            </>
+                          ) : (
+                            <>
+                              <Github className="mr-2 h-4 w-4" />
+                              Code
+                            </>
+                          )}
+                        </a>
+                      </Button>
+                    )
+                  })}
                 </CardFooter>
               )}
             </Card>
