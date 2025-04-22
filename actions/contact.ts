@@ -15,6 +15,15 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function submitContactForm(formData: FormData) {
   try {
+    // Check if API key is available
+    if (!process.env.RESEND_API_KEY) {
+      console.error("RESEND_API_KEY is not defined in environment variables")
+      return {
+        success: false,
+        message: "Email service is not configured. Please contact me directly at mail@supriyapoudel.com.np",
+      }
+    }
+
     // Extract and validate the form data
     const data = {
       name: formData.get("name") as string,
@@ -22,42 +31,55 @@ export async function submitContactForm(formData: FormData) {
       message: formData.get("message") as string,
     }
 
-    const validatedData = ContactSchema.parse(data)
+    // Log form data for debugging (without sensitive info)
+    console.log("Form submission attempt:", {
+      name: data.name,
+      emailProvided: !!data.email,
+      messageLength: data.message?.length,
+    })
 
-    // 1. Send the notification email to you
-    const { error: notificationError } = await resend.emails.send({
-      from: "Portfolio Contact Form <contact@supriyapoudel.com.np>",
-      to: "mail@supriyapoudel.com.np",
-      reply_to: validatedData.email,
-      subject: `Portfolio Contact: ${validatedData.name}`,
-      text: `
+    try {
+      // Validate form data
+      const validatedData = ContactSchema.parse(data)
+
+      // 1. Send the notification email to you
+      const notificationResult = await resend.emails.send({
+        from: "Portfolio Contact Form <contact@supriyapoudel.com.np>",
+        to: "mail@supriyapoudel.com.np",
+        reply_to: validatedData.email,
+        subject: `Portfolio Contact: ${validatedData.name}`,
+        text: `
 Name: ${validatedData.name}
 Email: ${validatedData.email}
 
 Message:
 ${validatedData.message}
-      `,
-      html: `
+        `,
+        html: `
 <h2>New Portfolio Contact Form Submission</h2>
 <hr>
 <p><strong>Name:</strong> ${validatedData.name}</p>
 <p><strong>Email:</strong> ${validatedData.email}</p>
 <h3>Message:</h3>
 <p>${validatedData.message.replace(/\n/g, "<br>")}</p>
-      `,
-    })
+        `,
+      })
 
-    if (notificationError) {
-      console.error("Notification email error:", notificationError)
-      return { success: false, message: "Failed to send message. Please try again." }
-    }
+      if (notificationResult.error) {
+        console.error("Notification email error:", notificationResult.error)
+        return {
+          success: false,
+          message: `Failed to send message: ${notificationResult.error.message}. Please try again or email me directly.`,
+        }
+      }
 
-    // 2. Send the auto-reply email to the sender
-    const { error: autoReplyError } = await resend.emails.send({
-      from: "Supriya Poudel <contact@supriyapoudel.com.np>",
-      to: validatedData.email,
-      subject: "Thank you for contacting me!",
-      text: `
+      // 2. Send the auto-reply email to the sender
+      try {
+        const autoReplyResult = await resend.emails.send({
+          from: "Supriya Poudel <contact@supriyapoudel.com.np>",
+          to: validatedData.email,
+          subject: "Thank you for contacting me!",
+          text: `
 Hello ${validatedData.name},
 
 Thank you for reaching out to me. I've received your message and will get back to you as soon as possible.
@@ -68,8 +90,8 @@ Here's a copy of your message:
 
 Best regards,
 Supriya Poudel
-      `,
-      html: `
+          `,
+          html: `
 <!DOCTYPE html>
 <html>
 <head>
@@ -130,21 +152,34 @@ Supriya Poudel
   </div>
 </body>
 </html>
-      `,
-    })
+          `,
+        })
 
-    if (autoReplyError) {
-      console.error("Auto-reply email error:", autoReplyError)
-      // We'll still return success even if the auto-reply fails
-      // since the main notification was sent successfully
+        if (autoReplyResult.error) {
+          console.error("Auto-reply email error:", autoReplyResult.error)
+          // We'll still return success even if the auto-reply fails
+          // since the main notification was sent successfully
+        }
+      } catch (autoReplyError) {
+        console.error("Auto-reply exception:", autoReplyError)
+        // Continue with success since the main notification was sent
+      }
+
+      console.log("Form submission successful")
+      return { success: true, message: "Message sent successfully! I'll get back to you soon." }
+    } catch (validationError) {
+      console.error("Validation error:", validationError)
+      if (validationError instanceof z.ZodError) {
+        return { success: false, message: validationError.errors[0].message }
+      }
+      throw validationError // Re-throw for the outer catch block
     }
-
-    return { success: true, message: "Message sent successfully! I'll get back to you soon." }
   } catch (error) {
     console.error("Form submission error:", error)
     return {
       success: false,
-      message: error instanceof z.ZodError ? error.errors[0].message : "Failed to send message. Please try again.",
+      message:
+        "There was a problem sending your message. Please try again or email me directly at mail@supriyapoudel.com.np",
     }
   }
 }

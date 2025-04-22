@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent } from "@/components/ui/card"
-import { Mail, Phone, MapPin, Linkedin, Github, Instagram } from "lucide-react"
+import { Mail, Phone, MapPin, Linkedin, Github, Instagram, AlertCircle } from "lucide-react"
 import { submitContactForm } from "@/actions/contact"
 
 export default function Contact() {
@@ -48,9 +48,10 @@ export default function Contact() {
         setTimeout(() => setFormStatus({}), 5000)
       }
     } catch (error) {
+      console.error("Contact form error:", error)
       setFormStatus({
         success: false,
-        message: "An unexpected error occurred. Please try again.",
+        message: "An unexpected error occurred. Please try again or email me directly at mail@supriyapoudel.com.np",
       })
     } finally {
       setIsSubmitting(false)
@@ -215,7 +216,10 @@ export default function Contact() {
                       />
                     </div>
                     {formStatus.message && !formStatus.success && (
-                      <div className="text-red-500 text-sm">{formStatus.message}</div>
+                      <div className="flex items-start gap-2 text-red-500 text-sm p-3 bg-red-50 dark:bg-red-900/10 rounded-md">
+                        <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5" />
+                        <span>{formStatus.message}</span>
+                      </div>
                     )}
                     <Button type="submit" className="w-full button-glow" disabled={isSubmitting}>
                       {isSubmitting ? "Sending..." : "Send Message"}
