@@ -25,9 +25,9 @@ const ministries = [
 
 const hackathons = [
   {
-    title: "Bhaktpur Navigator Hackathon",
+    title: "Hack the Circle: Bhaktpur Navigator",
     description:
-      "Created a Bhaktpur Navigator where users could select a radius and view temples and food places within that area. The app showed the shortest path between selected locations and included a real-time blogspot for everyone.",
+      "Created a Bhaktpur Navigator as a team where users could select a radius and view temples and food places within that area. The app showed the shortest path between selected locations and included a real-time blogspot for everyone.",
     icon: <MapPin className="h-10 w-10 text-primary" />,
     period: "December 6-8, 2024",
     achievement: "2nd Runner Up",
@@ -36,7 +36,7 @@ const hackathons = [
   {
     title: "WebCraft Business Website Builder",
     description:
-      "Developed a website builder for businesses with a simple form-filling interface that generates custom websites based on user inputs.",
+      "With a group of three, developed a website builder for businesses with a simple form-filling interface that generates custom websites based on user inputs.",
     icon: <Rocket className="h-10 w-10 text-primary" />,
     period: "February 9-11, 2025",
     achievement: "Participant",
@@ -49,7 +49,7 @@ const hackathons = [
     title: "Hult Prize Competition",
     description: "Finalist at Hult Khwopa College of Engineering competition.",
     icon: <Award className="h-10 w-10 text-primary" />,
-    period: "2024",
+    period: "January-February 2024",
     achievement: "Finalist",
     links: [],
   },

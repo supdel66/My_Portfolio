@@ -33,8 +33,15 @@ export default function Hero() {
             </div>
           </div>
           <div className="w-full md:w-1/2 flex justify-center animate-slide-in-right">
-            <div className="profile-image w-64 h-64 md:w-80 md:h-80 animate-float">
-              <Image src="/images/profile1.png" alt="Supriya" fill className="object-cover" priority />
+            <div className="profile-image w-64 h-64 md:w-80 md:h-80 animate-float relative">
+              <Image
+                src="/images/profile1.png"
+                alt="Supriya"
+                fill
+                className="object-cover"
+                priority
+                sizes="(max-width: 768px) 256px, 320px"
+              />
             </div>
           </div>
         </div>

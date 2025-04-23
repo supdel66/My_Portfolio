@@ -97,12 +97,7 @@ export default function Contact() {
                 <div>
                   <h4 className="font-medium">Email</h4>
                   <div className="space-y-1">
-                    <a
-                      href="mailto:supepoudel2005@gmail.com"
-                      className="text-muted-foreground hover:text-primary block"
-                    >
-                      supepoudel2005@gmail.com
-                    </a>
+                   
                     <a
                       href="mailto:mail@supriyapoudel.com.np"
                       className="text-muted-foreground hover:text-primary block"

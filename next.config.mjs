@@ -7,8 +7,10 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 60,
     unoptimized: true,
   },
-}
+};
 
-export default nextConfig
+export default nextConfig;

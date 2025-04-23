@@ -38,7 +38,14 @@ export default function About() {
         <div className="flex flex-col md:flex-row gap-12 items-center">
           <div className="w-full md:w-2/5 animate-fade-in">
             <div className="image-frame relative w-full h-[400px] overflow-hidden">
-              <Image src="/images/profile2.png" alt="Supriya" fill className="object-cover" />
+              <Image
+                src="/images/profile2.png"
+                alt="Supriya"
+                fill
+                className="object-cover"
+                priority
+                sizes="(max-width: 768px) 100vw, 40vw"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
             </div>
           </div>
