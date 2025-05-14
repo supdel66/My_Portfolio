@@ -31,13 +31,12 @@ const projects = [
   },
   {
     title: "Illumination Graphics Project",
-      description: "A 3D animated scene demonstrating ambient, diffuse, and specular lighting models with reflections.",
-        tags: ["WebGL", "3D Animation", "Lighting Models", "Graphics"],
-          github: "https://github.com/supdel66/illumination-graphics",
-            demo: "https://graphics.supriyapoudel.com.np",
-              icon: <Code className="h-10 w-10 text-primary/60" />,
-              },
-
+    description: "A 3D animated scene demonstrating ambient, diffuse, and specular lighting models with reflections.",
+    tags: ["WebGL", "3D Animation", "Lighting Models", "Graphics"],
+    github: "https://github.com/supdel66/illumination-graphics",
+    demo: "https://graphics.supriyapoudel.com.np",
+    icon: <Code className="h-10 w-10 text-primary/60" />,
+  },
 ]
 
 export default function Projects() {
@@ -52,7 +51,7 @@ export default function Projects() {
 
       <div className="container px-4 mx-auto relative z-10">
         <div className="section-indicator mx-auto text-center">💻 My Work</div>
-        <h2 className="section-title">My Projects</h2>
+        <h2 className="projects-heading">My Projects</h2>
         <p className="section-subtitle">Here are some of the projects I've been working on during my tech journey</p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -65,7 +64,7 @@ export default function Projects() {
               <CardHeader className="flex flex-row items-start space-x-4">
                 <div className="project-icon">{project.icon}</div>
                 <div>
-                  <CardTitle>{project.title}</CardTitle>
+                  <CardTitle className="text-foreground">{project.title}</CardTitle>
                   <CardDescription>{project.description}</CardDescription>
                 </div>
               </CardHeader>

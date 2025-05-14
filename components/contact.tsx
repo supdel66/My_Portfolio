@@ -78,13 +78,13 @@ export default function Contact() {
 
       <div className="container px-4 mx-auto relative z-10">
         <div className="section-indicator mx-auto text-center">📬 Get in Touch</div>
-        <h2 className="section-title">Let's Connect</h2>
+        <h2 className="contact-heading">Let's Connect</h2>
         <p className="section-subtitle">Have a question or want to connect? Feel free to reach out!</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="space-y-8 animate-fade-in">
-            <h3 className="text-2xl font-bold font-poppins">Contact Information</h3>
-            <p className="text-muted-foreground">
+            <h3 className="text-2xl font-bold font-poppins text-foreground">Contact Information</h3>
+            <p className="text-foreground">
               I'm always open to new opportunities and connections. Feel free to reach out through any of the following
               channels.
             </p>
@@ -95,9 +95,8 @@ export default function Contact() {
                   <Mail className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <h4 className="font-medium">Email</h4>
+                  <h4 className="font-medium text-foreground">Email</h4>
                   <div className="space-y-1">
-                   
                     <a
                       href="mailto:mail@supriyapoudel.com.np"
                       className="text-muted-foreground hover:text-primary block"
@@ -113,7 +112,7 @@ export default function Contact() {
                   <Phone className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <h4 className="font-medium">Phone</h4>
+                  <h4 className="font-medium text-foreground">Phone</h4>
                   <a href="tel:+9779869835025" className="text-muted-foreground hover:text-primary">
                     +977-9869835025
                   </a>
@@ -125,14 +124,14 @@ export default function Contact() {
                   <MapPin className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <h4 className="font-medium">Location</h4>
+                  <h4 className="font-medium text-foreground">Location</h4>
                   <p className="text-muted-foreground">Kathmandu, Nepal</p>
                 </div>
               </div>
             </div>
 
             <div className="pt-4">
-              <h4 className="font-medium mb-3">Connect with me</h4>
+              <h4 className="font-medium mb-3 text-foreground">Connect with me</h4>
               <div className="flex gap-4">
                 <a
                   href="https://www.linkedin.com/in/supriya-poudel-38ba13347/"
@@ -168,7 +167,7 @@ export default function Contact() {
           <div className="animate-slide-up">
             <Card className="overflow-hidden">
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-4 font-poppins">Send Me a Message</h3>
+                <h3 className="text-xl font-bold mb-4 font-poppins text-foreground">Send Me a Message</h3>
                 {formStatus.success ? (
                   <div className="bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300 p-4 rounded-md">
                     {formStatus.message || "Thank you for your message! I'll get back to you soon."}
@@ -176,7 +175,7 @@ export default function Contact() {
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-medium mb-1">
+                      <label htmlFor="name" className="block text-sm font-medium mb-1 text-foreground">
                         Name
                       </label>
                       <Input
@@ -190,7 +189,7 @@ export default function Contact() {
                       />
                     </div>
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium mb-1">
+                      <label htmlFor="email" className="block text-sm font-medium mb-1 text-foreground">
                         Email
                       </label>
                       <Input
@@ -205,7 +204,7 @@ export default function Contact() {
                       />
                     </div>
                     <div>
-                      <label htmlFor="message" className="block text-sm font-medium mb-1">
+                      <label htmlFor="message" className="block text-sm font-medium mb-1 text-foreground">
                         Message
                       </label>
                       <Textarea

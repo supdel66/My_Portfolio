@@ -156,7 +156,8 @@
 }
 
 .section-title {
-  @apply text-3xl md:text-4xl font-bold mb-8 text-center font-poppins;
+  @apply text-3xl md:text-4xl font-bold mb-8 text-center font-poppins text-foreground;
+  letter-spacing: -0.5px;
 }
 
 .section-subtitle {
@@ -456,4 +457,22 @@ body {
 
 .dark .project-icon {
   background: rgba(236, 72, 153, 0.15);
+}
+
+/* Section heading styles */
+.about-heading,
+.projects-heading,
+.ministries-heading,
+.contact-heading {
+  @apply text-4xl md:text-5xl font-bold mb-6 text-center;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: -0.5px;
+  color: var(--foreground);
+}
+
+.dark .about-heading,
+.dark .projects-heading,
+.dark .ministries-heading,
+.dark .contact-heading {
+  color: var(--foreground);
 }

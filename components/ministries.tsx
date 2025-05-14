@@ -5,15 +5,13 @@ import { Button } from "@/components/ui/button"
 const organizations = [
   {
     title: "Student Quality Circle KHCE",
-    description:
-      "Active member focusing on improving student life and academic environment at Khwopa College of Engineering. Collaborating with peers to implement quality initiatives.",
+    description: "Work for improving quality, organizing events and representing students in programs at Khwopa College of Engineering, Libali, Bhaktapur.",
     icon: <Users className="h-10 w-10 text-primary" />,
     period: "April 2025 - Present",
   },
   {
     title: "Leo Club",
-    description:
-      "Served as a dedicated member with Lions International Leo Lion batch. Participated in community service projects and leadership development activities.",
+    description: "Attained the  Lions International Leo Lion batch.",
     icon: <BookOpen className="h-10 w-10 text-primary" />,
     period: "2022 - 2023",
   },
@@ -21,9 +19,9 @@ const organizations = [
 
 const hackathons = [
   {
-    title: "Hack the Circle: Bhaktpur Navigator",
+    title: "Bhaktpur Navigator Hackathon",
     description:
-      "Created a Bhaktpur Navigator as a team where users could select a radius and view temples and food places within that area. The app showed the shortest path between selected locations and included a real-time blogspot for everyone.",
+      "Created a Bhaktpur Navigator where users could select a radius and view temples and food places within that area. The app showed the shortest path between selected locations and included a real-time blogspot for everyone.",
     icon: <MapPin className="h-10 w-10 text-primary" />,
     period: "December 6-8, 2024",
     achievement: "2nd Runner Up",
@@ -32,7 +30,7 @@ const hackathons = [
   {
     title: "WebCraft Business Website Builder",
     description:
-      "With a group of three, developed a website builder for businesses with a simple form-filling interface that generates custom websites based on user inputs.",
+      "Developed a website builder for businesses with a simple form-filling interface that generates custom websites based on user inputs.",
     icon: <Rocket className="h-10 w-10 text-primary" />,
     period: "February 9-11, 2025",
     achievement: "Participant",
@@ -46,7 +44,7 @@ const hackathons = [
     description:
       "Finalist at Hult Prize Khwopa College of Engineering competition. Proposed a bus system with automated sensors and purifiers for air health improvement in urban environments.",
     icon: <Award className="h-10 w-10 text-primary" />,
-    period: "January-February 2024",
+    period: "2024",
     achievement: "Finalist",
     links: [],
   },
@@ -64,7 +62,7 @@ export default function Ministries() {
 
       <div className="container px-4 mx-auto relative z-10">
         <div className="section-indicator mx-auto text-center">🤝 Community Involvement</div>
-        <h2 className="section-title">Clubs & Organizations</h2>
+        <h2 className="ministries-heading">Clubs & Organizations</h2>
         <p className="section-subtitle">Organizations and initiatives I've been involved with</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -76,7 +74,7 @@ export default function Ministries() {
             >
               <CardHeader className="pb-2">
                 <div className="mb-4 p-3 bg-primary/10 rounded-full">{org.icon}</div>
-                <CardTitle>{org.title}</CardTitle>
+                <CardTitle className="text-foreground">{org.title}</CardTitle>
                 <span className="text-sm text-muted-foreground">{org.period}</span>
               </CardHeader>
               <CardContent>
@@ -87,7 +85,7 @@ export default function Ministries() {
         </div>
 
         <div className="section-indicator mx-auto text-center mt-16">🏆 Competitions & Events</div>
-        <h2 className="section-title">Hackathons & Events</h2>
+        <h2 className="ministries-heading">Hackathons & Events</h2>
         <p className="section-subtitle">Competitions and tech events I've participated in</p>
 
         <div className="grid grid-cols-1 gap-6">
@@ -101,7 +99,7 @@ export default function Ministries() {
                 <div className="flex items-center gap-4">
                   <div className="p-3 bg-primary/10 rounded-full">{hackathon.icon}</div>
                   <div>
-                    <CardTitle className="flex items-center gap-2">
+                    <CardTitle className="flex items-center gap-2 text-foreground">
                       {hackathon.title}
                       {hackathon.achievement && <span className="achievement-badge">{hackathon.achievement}</span>}
                     </CardTitle>
