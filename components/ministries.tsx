@@ -1,25 +1,21 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
-import { Award, Users, BookOpen, Code, MapPin, Rocket, ExternalLink, Github } from "lucide-react"
+import { Award, Users, BookOpen, MapPin, Rocket, ExternalLink, Github } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-const ministries = [
+const organizations = [
   {
-    title: "Tech Community Volunteer",
-    description: "Helping organize local tech meetups and workshops for beginners.",
+    title: "Student Quality Circle KHCE",
+    description:
+      "Active member focusing on improving student life and academic environment at Khwopa College of Engineering. Collaborating with peers to implement quality initiatives.",
     icon: <Users className="h-10 w-10 text-primary" />,
-    period: "2022 - Present",
+    period: "April 2025 - Present",
   },
   {
-    title: "Youth Mentorship Program",
-    description: "Mentoring high school students interested in pursuing careers in technology.",
+    title: "Leo Club",
+    description:
+      "Served as a dedicated member with Lions International Leo Lion batch. Participated in community service projects and leadership development activities.",
     icon: <BookOpen className="h-10 w-10 text-primary" />,
-    period: "2021 - Present",
-  },
-  {
-    title: "Digital Literacy Initiative",
-    description: "Teaching basic computer skills to underserved communities.",
-    icon: <Code className="h-10 w-10 text-primary" />,
-    period: "2020 - 2022",
+    period: "2022 - 2023",
   },
 ]
 
@@ -47,7 +43,8 @@ const hackathons = [
   },
   {
     title: "Hult Prize Competition",
-    description: "Finalist at Hult Khwopa College of Engineering competition.",
+    description:
+      "Finalist at Hult Prize Khwopa College of Engineering competition. Proposed a bus system with automated sensors and purifiers for air health improvement in urban environments.",
     icon: <Award className="h-10 w-10 text-primary" />,
     period: "January-February 2024",
     achievement: "Finalist",
@@ -67,23 +64,23 @@ export default function Ministries() {
 
       <div className="container px-4 mx-auto relative z-10">
         <div className="section-indicator mx-auto text-center">🤝 Community Involvement</div>
-        <h2 className="section-title">Ministries & Organizations</h2>
+        <h2 className="section-title">Clubs & Organizations</h2>
         <p className="section-subtitle">Organizations and initiatives I've been involved with</p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {ministries.map((ministry, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {organizations.map((org, index) => (
             <Card
               key={index}
               className="card-hover animate-slide-up overflow-hidden"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <CardHeader className="pb-2">
-                <div className="mb-4 p-3 bg-primary/10 rounded-full">{ministry.icon}</div>
-                <CardTitle>{ministry.title}</CardTitle>
-                <span className="text-sm text-muted-foreground">{ministry.period}</span>
+                <div className="mb-4 p-3 bg-primary/10 rounded-full">{org.icon}</div>
+                <CardTitle>{org.title}</CardTitle>
+                <span className="text-sm text-muted-foreground">{org.period}</span>
               </CardHeader>
               <CardContent>
-                <CardDescription>{ministry.description}</CardDescription>
+                <CardDescription>{org.description}</CardDescription>
               </CardContent>
             </Card>
           ))}

@@ -17,12 +17,12 @@ export default function Hero() {
           <div className="w-full md:w-1/2 space-y-6 animate-fade-in">
             <div className="section-indicator">✨ Welcome to my digital space</div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-poppins">
-              Hi, I'm <span className="gradient-text">Supriya</span>
+              <span className="gradient-text">Supriya Poudel</span>
             </h1>
-            <h2 className="text-2xl md:text-3xl font-medium text-muted-foreground">Tech Newbie & ML Enthusiast</h2>
+          
             <p className="text-lg text-muted-foreground max-w-md">
-              Welcome to my portfolio! I'm a beginner exploring the exciting world of machine learning and data science,
-              documenting my journey as I learn and grow in this field.
+              Whether I'm solving a classification problem or debugging a front-end glitch, I remind myself that it all
+              comes down to the same thing: 0s and 1s, waiting to be shaped into something meaningful.
             </p>
             <div className="pt-4">
               <Button asChild size="lg" className="rounded-full button-glow hover-scale">
@@ -36,11 +36,12 @@ export default function Hero() {
             <div className="profile-image w-64 h-64 md:w-80 md:h-80 animate-float relative">
               <Image
                 src="/images/profile1.png"
-                alt="Supriya"
+                alt="Supriya Poudel"
                 fill
                 className="object-cover"
                 priority
                 sizes="(max-width: 768px) 256px, 320px"
+                loading="eager"
               />
             </div>
           </div>

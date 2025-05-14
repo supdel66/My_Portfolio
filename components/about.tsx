@@ -1,22 +1,22 @@
 import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
-import { Code, Lightbulb, BookOpen } from "lucide-react"
+import { Code, Lightbulb, Database } from "lucide-react"
 
 const skills = [
   {
     icon: <Code className="h-6 w-6 text-primary" />,
     title: "Machine Learning",
-    description: "Just started learning Python and ML basics. Excited to explore this field further!",
+    description: "Working with Python, NumPy, PyTorch, and scikit-learn.",
   },
   {
     icon: <Lightbulb className="h-6 w-6 text-primary" />,
     title: "Web Development",
-    description: "Have some experience with HTML, CSS, and JavaScript for building simple websites.",
+    description: "Familiarity with React, Next.js, HTML, CSS, and JavaScript.",
   },
   {
-    icon: <BookOpen className="h-6 w-6 text-primary" />,
-    title: "Data Science",
-    description: "Recently started exploring data analysis and visualization techniques.",
+    icon: <Database className="h-6 w-6 text-primary" />,
+    title: "Backend & Database",
+    description: "Attained knowledge of Supabase and Flask, did basic Node.js.",
   },
 ]
 
@@ -40,26 +40,27 @@ export default function About() {
             <div className="image-frame relative w-full h-[400px] overflow-hidden">
               <Image
                 src="/images/profile2.png"
-                alt="Supriya"
+                alt="Supriya Poudel"
                 fill
                 className="object-cover"
                 priority
                 sizes="(max-width: 768px) 100vw, 40vw"
+                loading="eager"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
             </div>
           </div>
 
           <div className="w-full md:w-3/5 space-y-6 animate-slide-up">
-            <h3 className="text-2xl font-bold font-poppins">Tech Newbie with a Passion for Machine Learning</h3>
+            <h3 className="text-2xl font-bold font-poppins">My Journey in Tech</h3>
             <p className="text-muted-foreground">
-              Hello! I'm Supriya, a tech enthusiast who has recently developed a strong interest in machine learning and
-              data science. I'm at the beginning of my journey in this exciting field and eager to learn more every day.
+              Hello! I'm Supriya, a growing person in tech who started with web dev but then found comfort in the
+              machine learning models.
             </p>
             <p className="text-muted-foreground">
-              Before diving into data science, I spent some time exploring web development, which gave me a solid
-              foundation in programming concepts. Now, I'm focusing on building my skills in machine learning and data
-              analysis, starting with small projects and gradually taking on more complex challenges.
+              My background in web development has given me a solid foundation in creating user-friendly interfaces,
+              while my growing expertise in machine learning allows me to work on data-driven solutions that make a real
+              impact.
             </p>
 
             <div className="pt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
