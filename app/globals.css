@@ -476,3 +476,36 @@ body {
 .dark .contact-heading {
   color: var(--foreground);
 }
+
+/* Hero name styles */
+.hero-name {
+  @apply text-2xl md:text-3xl font-bold mb-2 font-poppins;
+  background: linear-gradient(135deg, #ec4899, #e11d48, #f59e0b);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+  letter-spacing: -0.5px;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.dark .hero-name {
+  background: linear-gradient(135deg, #ec4899, #e11d48, #f59e0b);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+}

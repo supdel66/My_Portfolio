@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button"
 const organizations = [
   {
     title: "Student Quality Circle KHCE",
-    description: "Work for improving quality, organizing events and representing students in programs at Khwopa College of Engineering, Libali, Bhaktapur.",
+    description:
+      "Work for improving quality, organizing events and representing students in programs at Khwopa College of Engineering, Libali, Bhaktapur.",
     icon: <Users className="h-10 w-10 text-primary" />,
     period: "April 2025 - Present",
   },
@@ -19,18 +20,18 @@ const organizations = [
 
 const hackathons = [
   {
-    title: "Bhaktpur Navigator Hackathon",
+    title: "Hack the Circle 2024",
     description:
-      "Created a Bhaktpur Navigator where users could select a radius and view temples and food places within that area. The app showed the shortest path between selected locations and included a real-time blogspot for everyone.",
+      "As Team Clueless Coders, created a Bhaktpur Navigator where users could select a radius and view temples and food places within that area. The app showed the shortest path between selected locations and included a real-time blogspot for everyone.",
     icon: <MapPin className="h-10 w-10 text-primary" />,
     period: "December 6-8, 2024",
     achievement: "2nd Runner Up",
     links: [],
   },
   {
-    title: "WebCraft Business Website Builder",
+    title: "Codeyatra",
     description:
-      "Developed a website builder for businesses with a simple form-filling interface that generates custom websites based on user inputs.",
+      "As Team Mars, developed a website builder for businesses with a simple form-filling interface that generates custom websites based on user inputs.",
     icon: <Rocket className="h-10 w-10 text-primary" />,
     period: "February 9-11, 2025",
     achievement: "Participant",

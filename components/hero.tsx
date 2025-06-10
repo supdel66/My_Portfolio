@@ -15,8 +15,9 @@ export default function Hero() {
       <div className="container px-4 mx-auto relative z-10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-12 relative z-10">
           <div className="w-full md:w-1/2 space-y-6 animate-fade-in">
+            <h1 className="hero-name">Supriya Poudel</h1>
             <div className="section-indicator">✨ Welcome to my digital space</div>
-           
+
             <p className="text-lg text-foreground max-w-md">
               Whether I'm solving a classification problem or debugging a front-end glitch, I remind myself that it all
               comes down to the same thing: 0s and 1s, waiting to be shaped into something meaningful.

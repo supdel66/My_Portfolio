@@ -26,7 +26,7 @@ const projects = [
     description: "Collection of small JavaScript projects showcasing various web development concepts and techniques.",
     tags: ["JavaScript", "HTML", "CSS", "DOM Manipulation"],
     github: "https://github.com/supdel66/js_projects",
-    demo: "https://supdel66.github.io/js_projects/",
+    demo: "https://supdel66.github.io/Mini-JS-Projects/",
     icon: <Code className="h-10 w-10 text-primary/60" />,
   },
   {
