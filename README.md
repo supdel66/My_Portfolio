@@ -57,7 +57,7 @@ Provides ways to get in touch:
 
 ## 🚀 How to Run Locally
 
-```bash
+\`\`\`bash
 git clone https://github.com/yourusername/supriya-portfolio.git
 cd supriya-portfolio
 open index.html  # Or open with Live Server in VS Code
