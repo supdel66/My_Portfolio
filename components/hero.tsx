@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
+import Link from "next/link"
 
 export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -58,7 +59,7 @@ export default function Hero() {
   // Calculate years of experience (assuming started in 2023)
   const startYear = 2023
   const currentYear = new Date().getFullYear()
-  const yearsActive = currentYear - startYear 
+  const yearsActive = currentYear - startYear
 
   const highlights = [
     {
@@ -130,6 +131,8 @@ export default function Hero() {
 
       <div className="relative z-10 min-h-screen flex items-center justify-center px-4">
         <div className="max-w-6xl mx-auto">
+          
+
           <div className="grid lg:grid-cols-2 gap-8 items-center mb-20">
             {/* Left Content */}
             <div className="space-y-8 lg:pr-8">

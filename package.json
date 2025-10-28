@@ -40,6 +40,8 @@
     "@react-email/render": "latest",
     "@react-navigation/native": "7.1.17",
     "@react-navigation/stack": "7.4.8",
+    "@supabase/ssr": "latest",
+    "@supabase/supabase-js": "latest",
     "autoprefixer": "^10.4.20",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

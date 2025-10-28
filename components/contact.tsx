@@ -7,8 +7,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Mail, MapPin, Send, Github, Linkedin, Instagram, AlertCircle } from "lucide-react"
+import { Mail, MapPin, Send, Github, Linkedin, Instagram, AlertCircle, Bell } from "lucide-react"
 import { submitContactForm } from "@/actions/contact"
+import { submitSubscribe } from "@/actions/subscribe"
 
 export default function Contact() {
   const [isVisible, setIsVisible] = useState(false)
@@ -19,8 +20,17 @@ export default function Contact() {
     email: "",
     message: "",
   })
+  const [subscribeData, setSubscribeData] = useState({
+    name: "",
+    email: "",
+  })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubscribing, setIsSubscribing] = useState(false)
   const [formStatus, setFormStatus] = useState<{
+    success?: boolean
+    message?: string
+  }>({})
+  const [subscribeStatus, setSubscribeStatus] = useState<{
     success?: boolean
     message?: string
   }>({})
@@ -35,7 +45,6 @@ export default function Contact() {
 
       setMousePosition({ x: newX, y: newY })
 
-      // Add new trail element
       const newTrail = {
         x: e.clientX,
         y: e.clientY,
@@ -50,7 +59,6 @@ export default function Contact() {
     return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [])
 
-  // Clean up old trails
   useEffect(() => {
     const timer = setInterval(() => {
       setTrails((prev) => prev.slice(1))
@@ -62,6 +70,11 @@ export default function Contact() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubscribeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setSubscribeData((prev) => ({ ...prev, [name]: value }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -90,6 +103,34 @@ export default function Contact() {
       })
     } finally {
       setIsSubmitting(false)
+    }
+  }
+
+  const handleSubscribeSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubscribing(true)
+    setSubscribeStatus({})
+
+    try {
+      const formDataObj = new FormData()
+      formDataObj.append("name", subscribeData.name)
+      formDataObj.append("email", subscribeData.email)
+
+      const result = await submitSubscribe(formDataObj)
+      setSubscribeStatus(result)
+
+      if (result.success) {
+        setSubscribeData({ name: "", email: "" })
+        setTimeout(() => setSubscribeStatus({}), 5000)
+      }
+    } catch (error) {
+      console.log(error)
+      setSubscribeStatus({
+        success: false,
+        message: "An error occurred. Please try again.",
+      })
+    } finally {
+      setIsSubscribing(false)
     }
   }
 
@@ -127,7 +168,7 @@ export default function Contact() {
   ]
 
   return (
-    <section className="min-h-screen bg-background py-20 relative overflow-hidden">
+    <section className="min-h-screen bg-background py-20 relative overflow-hidden" data-section="contact">
       {/* Mouse Glare Effect */}
       <div className="absolute inset-0 pointer-events-none">
         <div
@@ -245,92 +286,165 @@ export default function Contact() {
             }`}
             style={{ transitionDelay: "0.4s" }}
           >
-            <Card className="card">
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold text-foreground">Send Me a Message</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {formStatus.success ? (
-                  <div className="bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300 p-4 rounded-md">
-                    {formStatus.message || "Thank you for your message! I'll get back to you soon."}
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-4">
+            <div className="space-y-6">
+              {/* Contact Form Card */}
+              <Card className="card">
+                <CardHeader>
+                  <CardTitle className="text-2xl font-bold text-foreground">Send Me a Message</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {formStatus.success ? (
+                    <div className="bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300 p-4 rounded-md">
+                      {formStatus.message || "Thank you for your message! I'll get back to you soon."}
+                    </div>
+                  ) : (
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                            Name
+                          </label>
+                          <Input
+                            id="name"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="Your name"
+                            required
+                            className="bg-background/50"
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                            Email
+                          </label>
+                          <Input
+                            id="email"
+                            name="email"
+                            type="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            placeholder="your.email@example.com"
+                            required
+                            className="bg-background/50"
+                          />
+                        </div>
+                      </div>
                       <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                        <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
+                          Message
+                        </label>
+                        <Textarea
+                          id="message"
+                          name="message"
+                          value={formData.message}
+                          onChange={handleChange}
+                          placeholder="Your message"
+                          rows={5}
+                          required
+                          className="bg-background/50"
+                        />
+                      </div>
+                      {formStatus.message && !formStatus.success && (
+                        <div className="flex items-start gap-2 text-red-500 text-sm p-3 bg-red-50 dark:bg-red-900/10 rounded-md">
+                          <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5" />
+                          <span>{formStatus.message}</span>
+                        </div>
+                      )}
+                      <Button type="submit" className="w-full button-glow" disabled={isSubmitting}>
+                        {isSubmitting ? (
+                          <div className="flex items-center justify-center">
+                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
+                            Sending...
+                          </div>
+                        ) : (
+                          <>
+                            <Send className="mr-2 h-5 w-5" />
+                            Send Message
+                          </>
+                        )}
+                      </Button>
+                      <p className="text-sm text-muted-foreground mt-2">
+                        You can also email me directly at{" "}
+                        <a href="mailto:mail@supriyapoudel.com.np" className="text-primary hover:underline">
+                          mail@supriyapoudel.com.np
+                        </a>
+                      </p>
+                    </form>
+                  )}
+                </CardContent>
+              </Card>
+
+              <Card className="card border-primary/30 bg-primary/5">
+                <CardHeader>
+                  <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
+                    <Bell className="h-5 w-5 text-primary" />
+                    Subscribe for Updates
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {subscribeStatus.success ? (
+                    <div className="bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300 p-4 rounded-md">
+                      {subscribeStatus.message || "Thank you for subscribing!"}
+                    </div>
+                  ) : (
+                    <form onSubmit={handleSubscribeSubmit} className="space-y-4">
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Get notified about my latest projects, achievements, and updates!
+                      </p>
+                      <div>
+                        <label htmlFor="sub-name" className="block text-sm font-medium text-foreground mb-2">
                           Name
                         </label>
                         <Input
-                          id="name"
+                          id="sub-name"
                           name="name"
-                          value={formData.name}
-                          onChange={handleChange}
+                          value={subscribeData.name}
+                          onChange={handleSubscribeChange}
                           placeholder="Your name"
                           required
                           className="bg-background/50"
                         />
                       </div>
                       <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                        <label htmlFor="sub-email" className="block text-sm font-medium text-foreground mb-2">
                           Email
                         </label>
                         <Input
-                          id="email"
+                          id="sub-email"
                           name="email"
                           type="email"
-                          value={formData.email}
-                          onChange={handleChange}
+                          value={subscribeData.email}
+                          onChange={handleSubscribeChange}
                           placeholder="your.email@example.com"
                           required
                           className="bg-background/50"
                         />
                       </div>
-                    </div>
-                    <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
-                        Message
-                      </label>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        value={formData.message}
-                        onChange={handleChange}
-                        placeholder="Your message"
-                        rows={5}
-                        required
-                        className="bg-background/50"
-                      />
-                    </div>
-                    {formStatus.message && !formStatus.success && (
-                      <div className="flex items-start gap-2 text-red-500 text-sm p-3 bg-red-50 dark:bg-red-900/10 rounded-md">
-                        <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5" />
-                        <span>{formStatus.message}</span>
-                      </div>
-                    )}
-                    <Button type="submit" className="w-full button-glow" disabled={isSubmitting}>
-                      {isSubmitting ? (
-                        <div className="flex items-center justify-center">
-                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
-                          Sending...
+                      {subscribeStatus.message && !subscribeStatus.success && (
+                        <div className="flex items-start gap-2 text-red-500 text-sm p-3 bg-red-50 dark:bg-red-900/10 rounded-md">
+                          <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5" />
+                          <span>{subscribeStatus.message}</span>
                         </div>
-                      ) : (
-                        <>
-                          <Send className="mr-2 h-5 w-5" />
-                          Send Message
-                        </>
                       )}
-                    </Button>
-                    <p className="text-sm text-muted-foreground mt-2">
-                      You can also email me directly at{" "}
-                      <a href="mailto:mail@supriyapoudel.com.np" className="text-primary hover:underline">
-                        mail@supriyapoudel.com.np
-                      </a>
-                    </p>
-                  </form>
-                )}
-              </CardContent>
-            </Card>
+                      <Button type="submit" className="w-full button-glow" disabled={isSubscribing}>
+                        {isSubscribing ? (
+                          <div className="flex items-center justify-center">
+                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
+                            Subscribing...
+                          </div>
+                        ) : (
+                          <>
+                            <Bell className="mr-2 h-5 w-5" />
+                            Subscribe Me
+                          </>
+                        )}
+                      </Button>
+                    </form>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </div>
