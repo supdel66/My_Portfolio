@@ -16,6 +16,19 @@ export const metadata: Metadata = {
   title: "Supriya | Tech Enthusiast",
   description: "Personal portfolio of Supriya, a tech enthusiast and newbie developer",
   generator: "v0.dev",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Supriya",
+  },
+  formatDetection: {
+    telephone: false,
+  },
 }
 
 export default function RootLayout({

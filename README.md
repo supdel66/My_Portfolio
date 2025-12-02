@@ -3,7 +3,9 @@
 Welcome to my personal portfolio website! This site showcases my journey as a beginner in the world of Machine Learning, Data Science, and Web Development. It includes details about my background, skillsets, projects, hackathon experiences, and initiatives I’ve been part of.
 
 ## 🔗 Live Demo
-www.supriyapoudel.com.np
+
+[Click here to view the live portfolio](www.supriyapoudel.com.np)  
+
 ---
 
 ## 📌 Sections
