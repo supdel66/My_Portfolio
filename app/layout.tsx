@@ -17,12 +17,9 @@ export const metadata: Metadata = {
   description: "Personal portfolio of Supriya, a tech enthusiast and newbie developer",
   generator: "v0.dev",
   icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/profile2.jpg", sizes: "192x192", type: "image/png" },
-    ],
-    apple: "/apple-touch-icon.jpg",
-    shortcut: "/favicon.ico",
+    icon: "/profile2.jpg",
+    apple: "/profile2.jpg",
+    shortcut: "/profile2.jpg",
   },
   manifest: "/manifest.json",
   appleWebApp: {
