@@ -9,9 +9,16 @@ import Competitions from "@/components/competitions"
 import Contact from "@/components/contact"
 import CircularNavigation from "@/components/circular-navigation"
 import Gallery from "@/components/gallery"
+import { MoodSelector, MusicPlayer } from "@/components/mood-selector"
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home")
+  const [userMood, setUserMood] = useState<string | null>(null)
+
+  const handleMoodSelected = (mood: string) => {
+    setUserMood(mood)
+    sessionStorage.setItem("moodSelected", mood)
+  }
 
   const sections = {
     home: <Hero />,
@@ -25,6 +32,12 @@ export default function Home() {
 
   return (
     <div className="relative overflow-hidden">
+      {/* Mood Selector Modal */}
+      <MoodSelector onMoodSelected={handleMoodSelected} />
+      
+      {/* Music Player */}
+      <MusicPlayer mood={userMood} />
+
       {/* Circular Navigation */}
       <CircularNavigation activeSection={activeSection} setActiveSection={setActiveSection} />
 
