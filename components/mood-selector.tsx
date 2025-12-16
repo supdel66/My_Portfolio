@@ -182,7 +182,7 @@ export function MusicPlayer({ mood }: { mood: string | null }) {
       
       if (audioRef.current) {
         audioRef.current.src = randomSong.url
-        audioRef.current.volume = 0.02
+        audioRef.current.volume = 0.5
         audioRef.current.loop = true
         
         // Try to play (may be blocked by browser autoplay policy)
