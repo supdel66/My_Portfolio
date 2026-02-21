@@ -3,10 +3,6 @@
 import { useState, useEffect, useRef } from "react"
 import { Volume2, VolumeX, Music, ChevronDown } from "lucide-react"
 
-interface MoodSelectorProps {
-  onMoodSelected: (mood: string) => void
-}
-
 const moods = [
   { id: "happy", label: "😊 Happy & Energetic", emoji: "😊" },
   { id: "chill", label: "😌 Chill & Relaxed", emoji: "😌" },
@@ -45,7 +41,7 @@ const moodPlaylists: Record<string, { title: string; artist: string; url: string
   ],
 }
 
-export function MoodSelector({ onMoodSelected }: MoodSelectorProps) {
+export function MoodSelector() {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedMood, setSelectedMood] = useState<string | null>(null)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -57,7 +53,7 @@ export function MoodSelector({ onMoodSelected }: MoodSelectorProps) {
 
   const handleContinue = () => {
     if (selectedMood) {
-      onMoodSelected(selectedMood)
+      sessionStorage.setItem("moodSelected", selectedMood)
       setIsOpen(false)
     }
   }
@@ -167,11 +163,18 @@ export function MoodSelector({ onMoodSelected }: MoodSelectorProps) {
   )
 }
 
-export function MusicPlayer({ mood }: { mood: string | null }) {
+export function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [isMuted, setIsMuted] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentSong, setCurrentSong] = useState<{ title: string; artist: string } | null>(null)
+  const [mood, setMood] = useState<string | null>(null)
+
+  useEffect(() => {
+    // Get mood from sessionStorage
+    const selectedMood = sessionStorage.getItem("moodSelected")
+    setMood(selectedMood)
+  }, [])
 
   useEffect(() => {
     if (mood && moodPlaylists[mood]) {
@@ -182,7 +185,7 @@ export function MusicPlayer({ mood }: { mood: string | null }) {
       
       if (audioRef.current) {
         audioRef.current.src = randomSong.url
-        audioRef.current.volume = 0.5
+        audioRef.current.volume = 1
         audioRef.current.loop = true
         
         // Try to play (may be blocked by browser autoplay policy)

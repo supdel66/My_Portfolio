@@ -1,16 +1,15 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { usePathname, useRouter } from "next/navigation"
+import Link from "next/link"
 import { Home, User, Users, Trophy, Code, Mail, Camera } from "lucide-react"
 
-interface CircularNavigationProps {
-  activeSection: string
-  setActiveSection: (section: string) => void
-}
-
-export default function CircularNavigation({ activeSection, setActiveSection }: CircularNavigationProps) {
+export default function CircularNavigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const pathname = usePathname()
+  const router = useRouter()
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -25,19 +24,16 @@ export default function CircularNavigation({ activeSection, setActiveSection }: 
   }, [])
 
   const menuItems = [
-    { id: "home", label: "Home", icon: <Home className="h-4 w-4" />, angle: 0 },
-    { id: "about", label: "About Me", icon: <User className="h-4 w-4" />, angle: 51.4 },
-    { id: "clubs", label: "Organizations", icon: <Users className="h-4 w-4" />, angle: 102.8 },
-    { id: "competitions", label: "Competitions", icon: <Trophy className="h-4 w-4" />, angle: 154.2 },
-    { id: "projects", label: "Projects", icon: <Code className="h-4 w-4" />, angle: 205.6 },
-    { id: "gallery", label: "Gallery", icon: <Camera className="h-4 w-4" />, angle: 257 },
-    { id: "contact", label: "Contact Me", icon: <Mail className="h-4 w-4" />, angle: 308.4 },
+    { path: "/", label: "Home", icon: <Home className="h-4 w-4" />, angle: 0 },
+    { path: "/about", label: "About Me", icon: <User className="h-4 w-4" />, angle: 51.4 },
+    { path: "/organizations", label: "Organizations", icon: <Users className="h-4 w-4" />, angle: 102.8 },
+    { path: "/competitions", label: "Competitions", icon: <Trophy className="h-4 w-4" />, angle: 154.2 },
+    { path: "/projects", label: "Projects", icon: <Code className="h-4 w-4" />, angle: 205.6 },
+    { path: "/gallery", label: "Gallery", icon: <Camera className="h-4 w-4" />, angle: 257 },
+    { path: "/contact", label: "Contact Me", icon: <Mail className="h-4 w-4" />, angle: 308.4 },
   ]
 
-  const handleSectionChange = (sectionId: string) => {
-    setActiveSection(sectionId)
-    setIsOpen(false)
-  }
+  const isActive = (path: string) => pathname === path
 
   return (
     <>
@@ -95,11 +91,11 @@ export default function CircularNavigation({ activeSection, setActiveSection }: 
             const angleRad = (item.angle * Math.PI) / 180
             const x = Math.cos(angleRad) * radius
             const y = Math.sin(angleRad) * radius
-            const isActive = activeSection === item.id
+            const active = isActive(item.path)
 
             return (
               <div
-                key={item.id}
+                key={item.path}
                 className={`absolute transition-all duration-700 ease-out ${
                   isOpen ? "opacity-100 scale-100" : "opacity-0 scale-0"
                 }`}
@@ -119,11 +115,12 @@ export default function CircularNavigation({ activeSection, setActiveSection }: 
                   }}
                 />
 
-                {/* Menu Item Button */}
-                <button
-                  onClick={() => handleSectionChange(item.id)}
-                  className={`relative w-12 h-12 rounded-full border-2 transition-all duration-300 group hover:scale-125 ${
-                    isActive
+                {/* Menu Item Link */}
+                <Link
+                  href={item.path}
+                  onClick={() => setIsOpen(false)}
+                  className={`relative w-12 h-12 rounded-full border-2 transition-all duration-300 group hover:scale-125 flex items-center justify-center inline-flex ${
+                    active
                       ? "bg-primary text-primary-foreground border-primary shadow-lg"
                       : "bg-card text-foreground border-primary/30 hover:border-primary hover:bg-primary/10"
                   }`}
@@ -139,10 +136,10 @@ export default function CircularNavigation({ activeSection, setActiveSection }: 
                   </div>
 
                   {/* Active Indicator */}
-                  {isActive && (
+                  {active && (
                     <div className="absolute -inset-1 rounded-full border-2 border-primary animate-pulse-slow" />
                   )}
-                </button>
+                </Link>
               </div>
             )
           })}
