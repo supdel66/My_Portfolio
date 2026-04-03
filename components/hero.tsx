@@ -57,7 +57,7 @@ export default function Hero() {
   ]
 
   // Calculate years of experience (assuming started in 2023)
-  const startYear = 2023
+  const startYear = 2022
   const currentYear = new Date().getFullYear()
   const yearsActive = currentYear - startYear
 
