@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData()
 
     const response = await fetch(
-      "https://web-production-32c2c.up.railway.app/palette",
+      "https://colorpalette-evcm.onrender.com/palette",
       {
         method: "POST",
         body: formData,
