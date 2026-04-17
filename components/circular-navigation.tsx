@@ -1,22 +1,23 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import Link from "next/link"
 import { Home, User, Users, Trophy, Code, Mail, Camera } from "lucide-react"
 
 export default function CircularNavigation() {
   const [isOpen, setIsOpen] = useState(false)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const buttonRef = useRef<HTMLButtonElement>(null)
   const pathname = usePathname()
   const router = useRouter()
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 100,
-        y: (e.clientY / window.innerHeight) * 100,
-      })
+      if (buttonRef.current) {
+        const x = (e.clientX / window.innerWidth) * 100
+        const y = (e.clientY / window.innerHeight) * 100
+        buttonRef.current.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(236, 72, 153, 0.1) 0%, transparent 50%)`
+      }
     }
 
     window.addEventListener("mousemove", handleMouseMove)
@@ -52,16 +53,13 @@ export default function CircularNavigation() {
           <div className="absolute inset-2 rounded-full border border-primary/20 animate-pulse" />
 
           <button
+            ref={buttonRef}
             onClick={() => setIsOpen(!isOpen)}
             className="relative w-14 h-14 bg-card border-2 border-primary/20 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group hover:scale-110"
-            style={{
-              background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(236, 72, 153, 0.1) 0%, transparent 50%)`,
-            }}
           >
             <div
-              className={`w-6 h-6 rounded-full border-2 border-primary transition-all duration-500 ${
-                isOpen ? "rotate-180 scale-75" : "rotate-0 scale-100"
-              }`}
+              className={`w-6 h-6 rounded-full border-2 border-primary transition-all duration-500 ${isOpen ? "rotate-180 scale-75" : "rotate-0 scale-100"
+                }`}
             >
               <div className="w-full h-full rounded-full border border-primary/50 animate-pulse-slow" />
             </div>
@@ -71,9 +69,8 @@ export default function CircularNavigation() {
 
       {/* Circular Navigation Menu - Centered on page when open */}
       <div
-        className={`fixed inset-0 flex items-center justify-center z-40 transition-all duration-700 ease-out ${
-          isOpen ? "opacity-100 scale-100" : "opacity-0 scale-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 flex items-center justify-center z-40 transition-all duration-700 ease-out ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-0 pointer-events-none"
+          }`}
       >
         {/* Background Overlay */}
         <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
@@ -96,9 +93,8 @@ export default function CircularNavigation() {
             return (
               <div
                 key={item.path}
-                className={`absolute transition-all duration-700 ease-out ${
-                  isOpen ? "opacity-100 scale-100" : "opacity-0 scale-0"
-                }`}
+                className={`absolute transition-all duration-700 ease-out ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-0"
+                  }`}
                 style={{
                   transform: `translate(${x - 24}px, ${y - 24}px)`,
                   transitionDelay: `${index * 80}ms`,
@@ -119,11 +115,10 @@ export default function CircularNavigation() {
                 <Link
                   href={item.path}
                   onClick={() => setIsOpen(false)}
-                  className={`relative w-12 h-12 rounded-full border-2 transition-all duration-300 group hover:scale-125 flex items-center justify-center inline-flex ${
-                    active
-                      ? "bg-primary text-primary-foreground border-primary shadow-lg"
-                      : "bg-card text-foreground border-primary/30 hover:border-primary hover:bg-primary/10"
-                  }`}
+                  className={`relative w-12 h-12 rounded-full border-2 transition-all duration-300 group hover:scale-125 flex items-center justify-center inline-flex ${active
+                    ? "bg-primary text-primary-foreground border-primary shadow-lg"
+                    : "bg-card text-foreground border-primary/30 hover:border-primary hover:bg-primary/10"
+                    }`}
                   title={item.label}
                 >
                   <div className="flex items-center justify-center w-full h-full">{item.icon}</div>

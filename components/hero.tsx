@@ -1,46 +1,58 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import Image from "next/image"
 import Link from "next/link"
 
 export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [trails, setTrails] = useState<Array<{ x: number; y: number; id: number; type: "star" | "heart" }>>([])
+  const glareRef = useRef<HTMLDivElement>(null)
+  const trailContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setIsLoaded(true)
 
     let trailId = 0
+    const MAX_TRAILS = 8
+
     const handleMouseMove = (e: MouseEvent) => {
       const newX = (e.clientX / window.innerWidth) * 100
       const newY = (e.clientY / window.innerHeight) * 100
 
-      setMousePosition({ x: newX, y: newY })
-
-      // Add new trail element
-      const newTrail = {
-        x: e.clientX,
-        y: e.clientY,
-        id: trailId++,
-        type: Math.random() > 0.5 ? "star" : ("heart" as "star" | "heart"),
+      // Update glare position directly via DOM — no React re-render
+      if (glareRef.current) {
+        glareRef.current.style.left = `${newX}%`
+        glareRef.current.style.top = `${newY}%`
       }
 
-      setTrails((prev) => [...prev.slice(-8), newTrail]) // Keep only last 8 trails
+      // Create trail element directly in the DOM — no React re-render
+      if (trailContainerRef.current) {
+        const el = document.createElement("div")
+        el.className = "absolute text-yellow-400 animate-ping"
+        el.style.left = `${e.clientX}px`
+        el.style.top = `${e.clientY}px`
+        el.style.transform = "translate(-50%, -50%)"
+        el.style.fontSize = "14px"
+        el.style.animationDuration = "0.8s"
+        el.style.pointerEvents = "none"
+        el.textContent = Math.random() > 0.5 ? "✨" : "💖"
+        trailContainerRef.current.appendChild(el)
+
+        // Remove after animation
+        setTimeout(() => {
+          el.remove()
+        }, 800)
+
+        // Cap total trail elements
+        const container = trailContainerRef.current
+        while (container.childNodes.length > MAX_TRAILS) {
+          container.removeChild(container.firstChild!)
+        }
+      }
     }
 
     window.addEventListener("mousemove", handleMouseMove)
     return () => window.removeEventListener("mousemove", handleMouseMove)
-  }, [])
-
-  // Clean up old trails
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTrails((prev) => prev.slice(1))
-    }, 150)
-
-    return () => clearInterval(timer)
   }, [])
 
   // Data arrays for dynamic counting
@@ -97,10 +109,11 @@ export default function Hero() {
       {/* Mouse Glare Effect */}
       <div className="absolute inset-0 pointer-events-none">
         <div
+          ref={glareRef}
           className="absolute w-96 h-96 rounded-full opacity-20 transition-all duration-300 ease-out"
           style={{
-            left: `${mousePosition.x}%`,
-            top: `${mousePosition.y}%`,
+            left: "0%",
+            top: "0%",
             transform: "translate(-50%, -50%)",
             background: `radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, rgba(236, 72, 153, 0.2) 30%, transparent 70%)`,
             filter: "blur(20px)",
@@ -109,38 +122,19 @@ export default function Hero() {
       </div>
 
       {/* Shooting Star Trails */}
-      <div className="absolute inset-0 pointer-events-none">
-        {trails.map((trail, index) => (
-          <div
-            key={trail.id}
-            className="absolute text-yellow-400 animate-ping"
-            style={{
-              left: trail.x,
-              top: trail.y,
-              transform: "translate(-50%, -50%)",
-              opacity: (index + 1) / trails.length,
-              fontSize: `${12 + index * 2}px`,
-              animationDuration: "0.8s",
-              animationDelay: `${index * 0.1}s`,
-            }}
-          >
-            {trail.type === "star" ? "✨" : "💖"}
-          </div>
-        ))}
-      </div>
+      <div ref={trailContainerRef} className="absolute inset-0 pointer-events-none" />
 
       <div className="relative z-10 min-h-screen flex items-center justify-center px-4">
         <div className="max-w-6xl mx-auto">
-          
+
 
           <div className="grid lg:grid-cols-2 gap-8 items-center mb-20">
             {/* Left Content */}
             <div className="space-y-8 lg:pr-8">
               {/* Welcome Message */}
               <div
-                className={`transition-all duration-1000 ease-out ${
-                  isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                }`}
+                className={`transition-all duration-1000 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                  }`}
                 style={{ transitionDelay: "0.2s" }}
               >
                 <h1 className="text-3xl md:text-5xl font-semibold text-foreground text-left">
@@ -150,9 +144,8 @@ export default function Hero() {
 
               {/* Main Message */}
               <div
-                className={`transition-all duration-1000 ease-out ${
-                  isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                }`}
+                className={`transition-all duration-1000 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                  }`}
                 style={{ transitionDelay: "0.4s" }}
               >
                 <p className="text-lg text-muted-foreground max-w-lg leading-relaxed">
@@ -163,9 +156,8 @@ export default function Hero() {
 
               {/* Signature */}
               <div
-                className={`transition-all duration-1000 ease-out ${
-                  isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                }`}
+                className={`transition-all duration-1000 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                  }`}
                 style={{ transitionDelay: "0.6s" }}
               >
                 <p className="text-xl font-semibold gradient-text">XOXO Supriya.</p>
@@ -175,9 +167,8 @@ export default function Hero() {
             {/* Right Content - Profile Image (More Centered) */}
             <div className="flex justify-center">
               <div
-                className={`relative transition-all duration-1500 ease-out ${
-                  isLoaded ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-110 rotate-12"
-                }`}
+                className={`relative transition-all duration-1500 ease-out ${isLoaded ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-110 rotate-12"
+                  }`}
                 style={{ transitionDelay: "0.3s" }}
               >
                 {/* Glowing Background */}
@@ -203,9 +194,8 @@ export default function Hero() {
 
           {/* Creative Highlights Section */}
           <div
-            className={`transition-all duration-1000 ease-out ${
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
+            className={`transition-all duration-1000 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              }`}
             style={{ transitionDelay: "0.8s" }}
           >
             {/* Main Title */}
