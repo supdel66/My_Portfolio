@@ -1,256 +1,175 @@
 "use client"
 
-import { useState, useEffect, useRef, useCallback } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { Code, User, Trophy, Camera, Users, Mail, MapPin, Clock, ArrowRight, Github, Linkedin, ExternalLink } from "lucide-react"
 
 export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false)
-  const glareRef = useRef<HTMLDivElement>(null)
-  const trailContainerRef = useRef<HTMLDivElement>(null)
+  const [time, setTime] = useState<Date | null>(null)
 
   useEffect(() => {
     setIsLoaded(true)
+    setTime(new Date())
 
-    let trailId = 0
-    const MAX_TRAILS = 8
+    const timer = setInterval(() => {
+      setTime(new Date())
+    }, 1000)
 
-    const handleMouseMove = (e: MouseEvent) => {
-      const newX = (e.clientX / window.innerWidth) * 100
-      const newY = (e.clientY / window.innerHeight) * 100
-
-      // Update glare position directly via DOM — no React re-render
-      if (glareRef.current) {
-        glareRef.current.style.left = `${newX}%`
-        glareRef.current.style.top = `${newY}%`
-      }
-
-      // Create trail element directly in the DOM — no React re-render
-      if (trailContainerRef.current) {
-        const el = document.createElement("div")
-        el.className = "absolute text-yellow-400 animate-ping"
-        el.style.left = `${e.clientX}px`
-        el.style.top = `${e.clientY}px`
-        el.style.transform = "translate(-50%, -50%)"
-        el.style.fontSize = "14px"
-        el.style.animationDuration = "0.8s"
-        el.style.pointerEvents = "none"
-        el.textContent = Math.random() > 0.5 ? "✨" : "💖"
-        trailContainerRef.current.appendChild(el)
-
-        // Remove after animation
-        setTimeout(() => {
-          el.remove()
-        }, 800)
-
-        // Cap total trail elements
-        const container = trailContainerRef.current
-        while (container.childNodes.length > MAX_TRAILS) {
-          container.removeChild(container.firstChild!)
-        }
-      }
-    }
-
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
+    return () => clearInterval(timer)
   }, [])
 
-  // Data arrays for dynamic counting
-  const projects = ["Customer Churn Prediction", "Recipe Finder", "Mini JS Projects", "Illumination Graphics Project"]
+  const formatTime = (date: Date | null) => {
+    if (!date) return "--:--"
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  }
 
-  const organizations = ["Rotaract Club of Pashupati Kathmandu", "Student Quality Circle", "Leo Club"]
+  const getGreeting = () => {
+    if (!time) return "Welcome"
+    const hour = time.getHours()
+    if (hour < 12) return "Good Morning"
+    if (hour < 18) return "Good Afternoon"
+    return "Good Evening"
+  }
 
-  const competitions = [
-    "Turboline x IIMS International Hackathon",
-    "Hack for Business",
-    "Hult Prize At Khwopa College of Engineering 2025",
-    "Codeyatra 2025",
-    "Hack the Circle",
-  ]
-
-  // Calculate years of experience (assuming started in 2023)
-  const startYear = 2022
-  const currentYear = new Date().getFullYear()
-  const yearsActive = currentYear - startYear
-
-  const highlights = [
-    {
-      number: `${projects.length}+`,
-      label: "Projects",
-      icon: "💻",
-      gradient: "from-blue-500/20 to-cyan-500/20",
-      border: "border-blue-500/30",
-    },
-    {
-      number: `${organizations.length}+`,
-      label: "Organizations",
-      icon: "🏢",
-      gradient: "from-purple-500/20 to-pink-500/20",
-      border: "border-purple-500/30",
-    },
-    {
-      number: `${competitions.length}+`,
-      label: "Competitions",
-      icon: "🏆",
-      gradient: "from-yellow-500/20 to-orange-500/20",
-      border: "border-yellow-500/30",
-    },
-    {
-      number: `${yearsActive}+`,
-      label: "Years Active",
-      icon: "⭐",
-      gradient: "from-green-500/20 to-emerald-500/20",
-      border: "border-green-500/30",
-    },
-  ]
+  const getDate = (date: Date | null) => {
+    if (!date) return "---"
+    return date.toLocaleDateString([], { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' })
+  }
 
   return (
-    <section className="min-h-screen relative overflow-hidden bg-background flex items-center justify-center">
-      {/* Mouse Glare Effect */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div
-          ref={glareRef}
-          className="absolute w-96 h-96 rounded-full opacity-20 transition-all duration-300 ease-out"
-          style={{
-            left: "0%",
-            top: "0%",
-            transform: "translate(-50%, -50%)",
-            background: `radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, rgba(236, 72, 153, 0.2) 30%, transparent 70%)`,
-            filter: "blur(20px)",
-          }}
-        />
-      </div>
+    <section className="min-h-screen relative flex flex-col items-center justify-center pt-20 pb-32 px-4 md:px-8">
+      <div className="max-w-6xl w-full mx-auto relative z-10 transition-all duration-1000 ease-out"
+        style={{ opacity: isLoaded ? 1 : 0, transform: isLoaded ? "translateY(0)" : "translateY(20px)" }}>
 
-      {/* Shooting Star Trails */}
-      <div ref={trailContainerRef} className="absolute inset-0 pointer-events-none" />
+        {/* Dashboard Header */}
+        <div className="mb-10 text-left">
+          <h2 className="text-xl md:text-2xl font-medium text-white/70 mb-2">
+            {getGreeting()}, Traveler!
+          </h2>
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-2 tracking-tight">
+            Supriya Poudel <span className="text-white/40 font-light">| Digital Hub</span>
+          </h1>
+        </div>
 
-      <div className="relative z-10 min-h-screen flex items-center justify-center px-4">
-        <div className="max-w-6xl mx-auto">
+        {/* BENTO GRID */}
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-5 auto-rows-[140px]">
 
-
-          <div className="grid lg:grid-cols-2 gap-8 items-center mb-20">
-            {/* Left Content */}
-            <div className="space-y-8 lg:pr-8">
-              {/* Welcome Message */}
-              <div
-                className={`transition-all duration-1000 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                  }`}
-                style={{ transitionDelay: "0.2s" }}
-              >
-                <h1 className="text-3xl md:text-5xl font-semibold text-foreground text-left">
-                  <div className="section-indicator">⭐Welcome to my Digital Space</div>
-                </h1>
-              </div>
-
-              {/* Main Message */}
-              <div
-                className={`transition-all duration-1000 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                  }`}
-                style={{ transitionDelay: "0.4s" }}
-              >
-                <p className="text-lg text-muted-foreground max-w-lg leading-relaxed">
-                  Hey, glad you made it here. It's me, your tourguide in the website. Without further ado click on that
-                  tempting click me circle on the side. Hope you enjoy and reach out to me.
-                </p>
-              </div>
-
-              {/* Signature */}
-              <div
-                className={`transition-all duration-1000 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                  }`}
-                style={{ transitionDelay: "0.6s" }}
-              >
-                <p className="text-xl font-semibold gradient-text">XOXO Supriya.</p>
-              </div>
+          {/* 1. PROFILE WIDGET (Large - 2x2) */}
+          <Link href="/about" className="glass-card glass-card-hover group relative overflow-hidden col-span-2 md:col-span-2 row-span-2 flex flex-col justify-end p-6">
+            <div className="absolute inset-0 z-0">
+              <Image
+                src="/images/profile1.png"
+                alt="Supriya"
+                fill
+                className="object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500 group-hover:scale-105"
+              />
+              {/* Gradient overlay for text readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
             </div>
 
-            {/* Right Content - Profile Image (More Centered) */}
-            <div className="flex justify-center">
-              <div
-                className={`relative transition-all duration-1500 ease-out ${isLoaded ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-110 rotate-12"
-                  }`}
-                style={{ transitionDelay: "0.3s" }}
-              >
-                {/* Glowing Background */}
-                <div className="absolute inset-0 bg-primary/20 rounded-full blur-3xl opacity-20 animate-pulse-slow" />
-
-                {/* Image Container */}
-                <div className="relative w-80 h-80 md:w-96 md:h-96 lg:w-[450px] lg:h-[450px] rounded-full overflow-hidden border-4 border-border shadow-2xl">
-                  <Image
-                    src="/images/profile1.png"
-                    alt="Supriya Poudel"
-                    fill
-                    className="object-cover hover:scale-110 transition-transform duration-700"
-                    priority
-                    sizes="(max-width: 768px) 320px, (max-width: 1024px) 384px, 450px"
-                  />
+            <div className="relative z-10 w-full flex items-end justify-between">
+              <div>
+                <div className="flex items-center gap-2 mb-2 opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                  <span className="glass-badge bg-pink-500/30 border-pink-500/50 text-white">About Me</span>
                 </div>
-
-                {/* Floating Ring */}
-                <div className="absolute -inset-4 border border-primary/30 rounded-full animate-pulse-slow" />
+                <h3 className="text-2xl font-bold text-white leading-tight">Aspiring AI/ML <br />Engineer</h3>
               </div>
+              <div className="h-10 w-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:bg-white/20 transition-colors">
+                <ArrowRight className="h-5 w-5 text-white -rotate-45 group-hover:rotate-0 transition-transform duration-300" />
+              </div>
+            </div>
+          </Link>
+
+          {/* 2. CLOCK & WEATHER (Wide - 2x1) */}
+          <div className="glass-card col-span-2 md:col-span-2 lg:col-span-2 row-span-1 p-5 flex flex-col justify-between relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+              <Clock className="h-24 w-24" />
+            </div>
+            <div className="relative z-10 flex justify-between items-start">
+              <div>
+                <h3 className="text-4xl md:text-5xl font-light text-white tracking-widest">{formatTime(time)}</h3>
+              </div>
+              <div className="text-right">
+                <div className="flex items-center justify-end gap-1 text-white/50 mb-1">
+                  <MapPin className="h-3 w-3" />
+                  <span className="text-xs uppercase tracking-wider font-semibold">Kathmandu</span>
+                </div>
+              </div>
+            </div>
+            <div className="relative z-10">
+              <p className="text-sm font-medium text-white/60">{getDate(time)}</p>
             </div>
           </div>
 
-          {/* Creative Highlights Section */}
-          <div
-            className={`transition-all duration-1000 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-            style={{ transitionDelay: "0.8s" }}
-          >
-            {/* Main Title */}
-            <div className="text-center mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">✨ Quick Overview</h2>
-              <p className="text-muted-foreground">My journey in numbers</p>
+          {/* 3. PROJECTS WIDGET (Square - 1x1) */}
+          <Link href="/projects" className="glass-card glass-card-hover col-span-1 row-span-1 p-5 flex flex-col items-center justify-center gap-3 group relative overflow-hidden">
+            <div className="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="p-3 rounded-2xl bg-blue-500/20 border border-blue-500/30 text-blue-400 group-hover:scale-110 transition-transform duration-300">
+              <Code className="h-6 w-6" />
             </div>
+            <span className="text-sm font-semibold text-white/80 group-hover:text-white transition-colors">Projects</span>
+          </Link>
 
-            {/* Creative Grid Layout */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-              {highlights.map((highlight, index) => (
-                <div
-                  key={index}
-                  className={`group relative overflow-hidden rounded-3xl p-6 transition-all duration-500 hover:scale-105 hover:-translate-y-2 ${highlight.border} border-2 bg-gradient-to-br ${highlight.gradient} backdrop-blur-sm`}
-                  style={{
-                    animationDelay: `${0.9 + index * 0.1}s`,
-                  }}
-                >
-                  {/* Background Pattern */}
-                  <div className="absolute inset-0 opacity-5">
-                    <div className="absolute top-2 right-2 text-4xl opacity-20">{highlight.icon}</div>
-                    <div className="absolute bottom-2 left-2 text-2xl opacity-10">{highlight.icon}</div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="relative z-10 text-center">
-                    {/* Icon */}
-                    <div className="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">
-                      {highlight.icon}
-                    </div>
-
-                    {/* Number */}
-                    <div className="text-3xl md:text-4xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
-                      {highlight.number}
-                    </div>
-
-                    {/* Label */}
-                    <div className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors duration-300">
-                      {highlight.label}
-                    </div>
-                  </div>
-
-                  {/* Hover Glow Effect */}
-                  <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-gradient-to-br from-white to-transparent" />
-                </div>
-              ))}
+          {/* 4. GALLERY WIDGET (Square - 1x1) */}
+          <Link href="/gallery" className="glass-card glass-card-hover col-span-1 row-span-1 p-5 flex flex-col items-center justify-center gap-3 group relative overflow-hidden">
+            <div className="absolute inset-0 bg-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="p-3 rounded-2xl bg-pink-500/20 border border-pink-500/30 text-pink-400 group-hover:scale-110 transition-transform duration-300">
+              <Camera className="h-6 w-6" />
             </div>
+            <span className="text-sm font-semibold text-white/80 group-hover:text-white transition-colors">Gallery</span>
+          </Link>
 
-            {/* Decorative Elements */}
-            <div className="flex justify-center mt-8 space-x-2">
-              <div className="w-2 h-2 rounded-full bg-primary/40 animate-pulse" style={{ animationDelay: "0s" }} />
-              <div className="w-2 h-2 rounded-full bg-primary/40 animate-pulse" style={{ animationDelay: "0.2s" }} />
-              <div className="w-2 h-2 rounded-full bg-primary/40 animate-pulse" style={{ animationDelay: "0.4s" }} />
+          {/* 5. COMPETITIONS WIDGET (Wide - 2x1) */}
+          <Link href="/competitions" className="glass-card glass-card-hover col-span-2 row-span-1 p-5 flex justify-between items-center group relative overflow-hidden">
+            <div className="absolute inset-0 bg-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="z-10">
+              <h3 className="text-lg font-bold text-white mb-1 group-hover:text-orange-300 transition-colors">Awards / Awards</h3>
+              <p className="text-xs text-white/50 font-medium">Turboline, Hult Prize, Hackathons</p>
+            </div>
+            <div className="z-10 h-12 w-12 rounded-full bg-orange-500/20 border border-orange-500/30 flex items-center justify-center group-hover:rotate-12 transition-transform duration-300">
+              <Trophy className="h-5 w-5 text-orange-400" />
+            </div>
+          </Link>
+
+          {/* 6. SOCIAL LINKS (Square - 1x1) */}
+          <Link href="/contact" className="glass-card glass-card-hover col-span-1 row-span-1 p-5 flex flex-col items-center justify-center gap-4 group">
+            <div className="flex gap-3">
+              <Github className="h-5 w-5 text-white/70 group-hover:text-white transition-colors" />
+              <Linkedin className="h-5 w-5 text-white/70 group-hover:text-blue-400 transition-colors" />
+            </div>
+            <span className="text-sm font-medium text-white/60 group-hover:text-white transition-colors">Connect</span>
+          </Link>
+
+          {/* 7. ORGANIZATIONS WIDGET (Square - 1x1) */}
+          <Link href="/organizations" className="glass-card glass-card-hover col-span-1 row-span-1 p-5 flex flex-col items-center justify-center gap-3 group relative overflow-hidden">
+            <div className="absolute inset-0 bg-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="p-3 rounded-2xl bg-purple-500/20 border border-purple-500/30 text-purple-400 group-hover:scale-110 transition-transform duration-300">
+              <Users className="h-6 w-6" />
+            </div>
+            <span className="text-sm font-semibold text-white/80 group-hover:text-white transition-colors">Clubs</span>
+          </Link>
+
+          {/* 8. MINI PLAYER / STATUS WIDGET (Wide - 2x1) */}
+          <div className="glass-card col-span-2 md:col-span-4 lg:col-span-2 row-span-1 p-5 flex items-center gap-4 relative overflow-hidden group">
+            <div className="h-full aspect-square rounded-xl bg-gradient-to-br from-pink-500 via-purple-500 to-blue-500 flex items-center justify-center shadow-lg relative overflow-hidden">
+              {/* Spinner animation to look like playing music */}
+              <div className="absolute inset-0 border-2 border-white/20 border-t-white/80 rounded-full animate-spin" style={{ animationDuration: '3s' }} />
+              <div className="h-4 w-4 rounded-full bg-white relative z-10" />
+            </div>
+            <div className="flex-1">
+              <p className="text-xs font-bold text-pink-400 uppercase tracking-wider mb-1">Current Status</p>
+              <h3 className="text-sm font-medium text-white truncate group-hover:text-pink-200 transition-colors">Exams and exams..</h3>
+            </div>
+            <div className="hidden md:flex gap-2">
+              <div className="h-2 w-1 bg-white/40 rounded-full animate-pulse-slow" style={{ animationDelay: "0s" }} />
+              <div className="h-4 w-1 bg-white/60 rounded-full animate-pulse-slow" style={{ animationDelay: "0.2s" }} />
+              <div className="h-3 w-1 bg-white/80 rounded-full animate-pulse-slow" style={{ animationDelay: "0.4s" }} />
+              <div className="h-5 w-1 bg-white rounded-full animate-pulse-slow" style={{ animationDelay: "0.6s" }} />
             </div>
           </div>
+
         </div>
       </div>
     </section>

@@ -4,8 +4,7 @@ import { Inter, Poppins } from "next/font/google"
 import "./globals.css"
 import Navbar from "@/components/navbar"
 import { ThemeProvider } from "@/components/theme-provider"
-import CircularNavigation from "@/components/circular-navigation"
-import PaletteChanger from "@/components/palette-changer"
+import GlassDock from "@/components/glass-dock"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 const poppins = Poppins({
@@ -40,16 +39,18 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${inter.variable} ${poppins.variable} font-sans`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <PaletteChanger />
-          <CircularNavigation />
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
+          {/* Ambient background */}
+          <div className="ambient-bg" />
 
-          <div className="flex min-h-screen flex-col">
+          <div className="relative z-10 flex min-h-screen flex-col">
             <Navbar />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 pb-24">{children}</main>
           </div>
+
+          <GlassDock />
         </ThemeProvider>
       </body>
     </html>
