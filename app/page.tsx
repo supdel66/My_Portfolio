@@ -1,4 +1,5 @@
 import Hero from "@/components/hero"
+import CameraUpload from "@/components/CameraUpload"
 
 export const metadata = {
   title: "Home | My Portfolio",

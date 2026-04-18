@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Code, User, Trophy, Camera, Users, Mail, MapPin, Clock, ArrowRight, Github, Linkedin, ExternalLink } from "lucide-react"
+import CameraUpload from "./CameraUpload"
 
 export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -151,7 +152,19 @@ export default function Hero() {
             <span className="text-sm font-semibold text-white/80 group-hover:text-white transition-colors">Clubs</span>
           </Link>
 
-          {/* 8. MINI PLAYER / STATUS WIDGET (Wide - 2x1) */}
+          {/* 8. VISITORS GLOBE (Square - 1x1) */}
+          <Link href="/visitors" className="glass-card glass-card-hover col-span-1 row-span-1 p-5 flex flex-col items-center justify-center gap-3 group relative overflow-hidden">
+            <div className="absolute inset-0 bg-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="p-3 rounded-2xl bg-teal-500/20 border border-teal-500/30 text-teal-400 group-hover:scale-110 transition-transform duration-300">
+              <Users className="h-6 w-6" />
+            </div>
+            <span className="text-sm font-semibold text-white/80 group-hover:text-white transition-colors">Visitors</span>
+          </Link>
+
+          {/* 9. LEAVE MARK (Camera Upload) (Square - 1x1) */}
+          <CameraUpload />
+
+          {/* 10. MINI PLAYER / STATUS WIDGET (Wide - 2x1) */}
           <div className="glass-card col-span-2 md:col-span-4 lg:col-span-2 row-span-1 p-5 flex items-center gap-4 relative overflow-hidden group">
             <div className="h-full aspect-square rounded-xl bg-gradient-to-br from-pink-500 via-purple-500 to-blue-500 flex items-center justify-center shadow-lg relative overflow-hidden">
               {/* Spinner animation to look like playing music */}

@@ -20,10 +20,15 @@ export default function Navbar() {
         }`}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between w-full">
           <Link href="/" className="text-xl font-bold font-poppins gradient-text">
             Supriya
           </Link>
+          <div className="flex items-center">
+            <Link href="/visitors" className="text-sm font-medium text-white/70 hover:text-white transition-colors">
+              Visitors Globe
+            </Link>
+          </div>
         </div>
       </div>
     </header>
