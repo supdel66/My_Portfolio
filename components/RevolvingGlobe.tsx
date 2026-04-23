@@ -65,13 +65,13 @@ export default function RevolvingGlobe({ visitors }: { visitors: string[] }) {
                 <div className="absolute w-[70%] h-[70%] rounded-full border border-white/5 border-dashed" />
 
                 {/* Center Object */}
-                <div className="relative z-10 w-24 h-24 md:w-32 md:h-32 rounded-full ring-2 ring-white/20 p-2 bg-black/50 backdrop-blur-md shadow-[0_0_80px_rgba(255,255,255,0.2)]">
+                <div className="relative z-10 w-32 h-32 md:w-48 md:h-48 rounded-full ring-2 ring-white/20 p-2 bg-black/50 backdrop-blur-md shadow-[0_0_100px_rgba(255,255,255,0.3)] animate-pulse-slow">
                     <img
                         src={centerVisitor}
                         alt="Center Visitor"
-                        className="w-full h-full object-cover rounded-full"
+                        className="w-full h-full object-cover rounded-full shadow-[0_0_20px_rgba(255,255,255,0.2)]"
                     />
-                    <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs font-semibold tracking-widest text-white/60 bg-black/40 px-3 py-1 rounded-full border border-white/10 whitespace-nowrap">
+                    <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-semibold tracking-widest text-white/60 bg-black/40 px-3 py-1 rounded-full border border-white/10 whitespace-nowrap shadow-lg">
                         LATEST VISITOR
                     </div>
                 </div>
@@ -83,50 +83,50 @@ export default function RevolvingGlobe({ visitors }: { visitors: string[] }) {
 
                     // Distribute on two orbital rings alternatively
                     const isOuterRing = i % 2 === 0
-                    const radiusPercent = isOuterRing ? 50 : 35
+                    // Expanded radius to accommodate larger images
+                    const radius = isOuterRing ? 300 : 210 // px distance from center
 
-                    const spinDuration = isOuterRing ? 40 : 25 // Variable speed
-                    // Alternating directions
-                    const spinClass = isOuterRing ? 'animate-spin-slow' : 'animate-spin-slow' // Custom keyframes for varied
+                    const spinDuration = isOuterRing ? 45 : 30 // Variable speed
+                    const direction = isOuterRing ? 'normal' : 'reverse'
 
                     return (
                         <div
                             key={i}
-                            className={`absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none`}
+                            className="absolute top-1/2 left-1/2 w-0 h-0 flex items-center justify-center pointer-events-none"
                             style={{
-                                animation: `spin ${spinDuration}s linear infinite ${isOuterRing ? 'normal' : 'reverse'}`,
+                                animation: `spin ${spinDuration}s linear infinite ${direction}`,
+                                transform: `rotate(${angle}rad)`, // Initial angle offset
                             }}
                         >
                             <div
-                                className="absolute"
+                                className="absolute w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden border border-white/20 shadow-2xl pointer-events-auto hover:scale-125 hover:z-20 transition-transform duration-300 backdrop-blur-md bg-black/20 group"
                                 style={{
-                                    transform: `translate(${Math.cos(angle) * radiusPercent}vw, ${Math.sin(angle) * radiusPercent}vh)`,
-                                    // For responsive radius, it's better to translate relative to the container 
-                                    // but percent of container size works best using top/left on the parent but let's use direct positioning using radial math
-                                }}
-                            />
-                            <div
-                                className="absolute w-12 h-12 md:w-16 md:h-16 rounded-full overflow-hidden border border-white/20 shadow-xl pointer-events-auto hover:scale-125 hover:z-20 transition-transform duration-300 backdrop-blur-md bg-black/20"
-                                style={{
-                                    transform: `translate(${Math.cos(angle) * (isOuterRing ? 150 : 100)}%, ${Math.sin(angle) * (isOuterRing ? 150 : 100)}%)`,
-                                    // To keep image upright if container spins
-                                    animation: `spin-reverse ${spinDuration}s linear infinite ${isOuterRing ? 'normal' : 'reverse'}`,
+                                    transform: `translateX(${radius}px)`,
                                 }}
                             >
-                                <img
-                                    src={url}
-                                    alt="Visitor"
-                                    loading="lazy"
-                                    className="w-full h-full object-cover"
-                                />
+                                <div
+                                    className="w-full h-full relative"
+                                    style={{
+                                        animation: `spin ${spinDuration}s linear infinite ${direction === 'normal' ? 'reverse' : 'normal'}`,
+                                    }}
+                                >
+                                    {/* Subtle inner glow for photos */}
+                                    <div className="absolute inset-0 rounded-full shadow-[inset_0_0_15px_rgba(255,255,255,0.1)] z-10 pointer-events-none" />
+                                    <img
+                                        src={url}
+                                        alt="Visitor"
+                                        loading="lazy"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
                             </div>
                         </div>
                     )
                 })}
             </div>
 
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 text-white/40 bg-white/5 border border-white/10 px-4 py-2 rounded-full backdrop-blur-sm text-sm">
-                <Users className="w-4 h-4" />
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 text-white/40 bg-white/5 border border-white/10 px-6 py-3 rounded-full backdrop-blur-sm text-base font-medium">
+                <Users className="w-5 h-5 text-teal-400" />
                 <span>{visitors.length} {visitors.length === 1 ? 'Soul' : 'Souls'} in the universe</span>
             </div>
         </div>

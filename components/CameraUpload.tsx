@@ -5,8 +5,10 @@ import { Camera, Upload, CheckCircle2, Loader2, XCircle } from "lucide-react"
 import { supabase } from "@/lib/supabase"
 import { Button } from "@/components/ui/button" // Assuming standard shadcn/ui
 import { toast } from "sonner" // For notifications, assuming it exists based on package.json
+import { useRouter } from "next/navigation"
 
 export default function CameraUpload() {
+    const router = useRouter()
     const [isUploading, setIsUploading] = useState(false)
     const [status, setStatus] = useState<"idle" | "uploading" | "success" | "error">("idle")
     const fileInputRef = useRef<HTMLInputElement>(null)
@@ -32,9 +34,9 @@ export default function CameraUpload() {
 
             URL.revokeObjectURL(objectUrl)
 
-            // Start with a small target width to hit the 5kb limit
-            let maxWidth = 150
-            let quality = 0.5
+            // Start with Full HD width for maximum clarity
+            let maxWidth = 1080
+            let quality = 0.9
             let blob: Blob | null = null
 
             const canvas = document.createElement("canvas")
@@ -42,7 +44,7 @@ export default function CameraUpload() {
 
             if (!ctx) throw new Error("Could not get canvas context")
 
-            // Iteratively compress until under 5KB
+            // Iteratively compress only if massive (Target: 1MB for crystal clear quality)
             while (true) {
                 const scale = maxWidth / img.width
                 const targetHeight = img.height * scale
@@ -63,23 +65,23 @@ export default function CameraUpload() {
 
                 if (!blob) throw new Error("Failed to compress image")
 
-                // 5KB = 5120 bytes
-                if (blob.size <= 5120) {
+                // Target: 1MB (1048576 bytes) - virtually lossless for these scales
+                if (blob.size <= 1048576) {
                     break
                 }
 
-                // If still too big, reduce dimensions and quality drastically
-                if (maxWidth > 50) maxWidth -= 20
-                if (quality > 0.1) quality -= 0.1
-
-                if (maxWidth <= 30 && quality <= 0.1) {
-                    // Absolute minimum fallback
+                // Only reduce if still over 1MB
+                if (quality > 0.6) {
+                    quality -= 0.1
+                } else if (maxWidth > 600) {
+                    maxWidth -= 200
+                } else {
                     break
                 }
             }
 
-            if (!blob || blob.size > 5120) {
-                toast.error("Could not compress file under 5KB. Try a simpler image.")
+            if (!blob || blob.size > 2097152) { // 2MB hard limit
+                toast.error(`Photo is too large to process. Please try a different one.`)
                 setStatus("error")
                 return
             }
@@ -100,6 +102,11 @@ export default function CameraUpload() {
 
             setStatus("success")
             toast.success("Photo added to the globe successfully!")
+
+            // Redirect to visitors page so they can see themselves
+            setTimeout(() => {
+                router.push("/visitors")
+            }, 1000)
 
             // Reset after a bit
             setTimeout(() => {
