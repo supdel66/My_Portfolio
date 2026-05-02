@@ -2,6 +2,8 @@ import { supabase } from "@/lib/supabase"
 import RevolvingGlobe from "@/components/RevolvingGlobe"
 
 export const revalidate = 0 // Disable caching so it always shows freshest data immediately
+export const dynamic = 'force-dynamic'
+export const fetchCache = 'force-no-store'
 
 export const metadata = {
     title: "Visitors | My Portfolio",
@@ -18,7 +20,7 @@ export default async function VisitorsPage() {
         let hasMore = true
 
         while (hasMore) {
-            const { data: files, error } = await supabase.storage.from("visitors").list("", {
+            const { data: files, error } = await supabase.storage.from("visitors").list(undefined, {
                 limit: limit,
                 offset: offset,
                 sortBy: { column: 'created_at', order: 'asc' }

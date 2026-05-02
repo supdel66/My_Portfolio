@@ -50,7 +50,7 @@ export default function RootLayout({
             <main className="flex-1 pb-24">{children}</main>
           </div>
 
-          <GlassDock />
+          {/* <GlassDock /> */}
         </ThemeProvider>
       </body>
     </html>
