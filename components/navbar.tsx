@@ -24,11 +24,11 @@ export default function Navbar() {
           <Link href="/" className="text-xl font-bold font-poppins gradient-text">
             Supriya
           </Link>
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <Link href="/visitors" className="text-sm font-medium text-white/70 hover:text-white transition-colors">
               Visitors Globe
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </header>

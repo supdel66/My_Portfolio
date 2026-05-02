@@ -173,7 +173,7 @@ export default function Hero() {
             </div>
             <div className="flex-1">
               <p className="text-xs font-bold text-pink-400 uppercase tracking-wider mb-1">Current Status</p>
-              <h3 className="text-sm font-medium text-white truncate group-hover:text-pink-200 transition-colors">Exams and exams..</h3>
+              <h3 className="text-sm font-medium text-white truncate group-hover:text-pink-200 transition-colors">Exams overr</h3>
             </div>
             <div className="hidden md:flex gap-2">
               <div className="h-2 w-1 bg-white/40 rounded-full animate-pulse-slow" style={{ animationDelay: "0s" }} />
